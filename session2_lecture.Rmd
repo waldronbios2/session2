@@ -1,5 +1,5 @@
 ---
-title: "BIOS621 Session 2"
+title: "BIOS 621 / 821 Session 2"
 author: "Levi Waldron"
 output: beamer_presentation
 ---
