@@ -8,6 +8,8 @@ output:
     theme: "Hannover"
     colortheme: "dove"
     fonttheme: "structurebold"
+    slide_level: 2
+    df_print: kable
 ---
 
 # Learning Objectives and Outline
@@ -135,16 +137,38 @@ Load the contraceptive use data
 
 \tiny
 ```{r}
+suppressPackageStartupMessages(library(dplyr))
 cuse <- read.table("cuse.dat", header=TRUE)
-summary(cuse)
+cuse <- mutate(cuse, percentusing = using / (using + notUsing) * 100) %>%
+  mutate(n = using + notUsing)
+cuse
 ```
 
 Source: http://data.princeton.edu/wws509/datasets/#cuse
 
+## Table One
+
+\tiny
+
+```{r, echo=FALSE}
+tableone::CreateTableOne(
+  data = cuse,
+  vars = c("education", "wantsMore", "percentusing"),
+  strata = "age",
+  addOverall = TRUE,
+  test = FALSE
+)
+```
+
+\footnotesize
+
+See [tableone](https://cran.r-project.org/web/packages/tableone/vignettes/introduction.html) vignette for e.g. how to export to Word / Excel
+
+https://cran.r-project.org/web/packages/tableone/vignettes/introduction.html
+
 ## Perform regression
 
-With no interactions:
-
+ 
 \tiny
 ```{r}
 fit1 <- glm(cbind(using, notUsing) ~ age + education + wantsMore, 
