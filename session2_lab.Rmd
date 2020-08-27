@@ -7,7 +7,7 @@ output:
     fig_caption: yes
     number_sections: yes
     code_folding: hide
-    theme: cerulean
+    theme: lumen
   html_document:
     toc: yes
     df_print: paged
@@ -16,6 +16,11 @@ editor_options:
 ---
 
 # Lab Exercises - contraceptive use data
+
+Learning objectives:
+* gain additional familiarity with R, including `dplyr` and `ggplot2`
+
+# Questions
 
 1. What is the mean fraction of women using birth control for each age group? Each education level? For women who do or don't want more children?
      - Hint: look at the "data wrangling" cheat sheet functions `mutate`, `group_by`, and `summarize`
@@ -53,10 +58,21 @@ Here's a simple way to create the summary table that is required for your assign
 and for any epidemiological analysis you do. The text format is fine, and convenient
 for moving into another pubication or presentation document. See the [tableone vignette](https://cran.r-project.org/web/packages/tableone/vignettes/introduction.html) for more complex usage.
 
+
 ```{r}
 # Note the use of `tableone::` to specify that `CreateTableOne` comes from the 
 # tableone library without actually loading the library.
 tableone::CreateTableOne(data = cuse)
+```
+**Table 1: characteristics of the contraceptive use dataset**
+
+## A basic barplot
+
+See the [Data Visualization Cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf) for help on enhancing this barplot.
+```{r}
+library(ggplot2)
+ggplot(cuse, aes(x=age, y=I(using+notUsing), fill=notUsing)) + 
+  geom_bar(stat="identity")
 ```
 
 
