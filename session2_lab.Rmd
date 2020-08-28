@@ -7,10 +7,7 @@ output:
     fig_caption: yes
     number_sections: yes
     code_folding: hide
-    theme: lumen
-  html_document:
-    toc: yes
-    df_print: paged
+    theme: journal
 editor_options:
   chunk_output_type: inline
 ---
@@ -18,7 +15,13 @@ editor_options:
 # Lab Exercises - contraceptive use data
 
 Learning objectives:
+
 * gain additional familiarity with R, including `dplyr` and `ggplot2`
+* perform exploratory data analysis in R
+* perform and interpret logistic regression
+    + interpret logistic regression coefficients
+    + make predictions based on a logistic regression model
+* perform and interpret likelihood ratio test
 
 # Questions
 
@@ -69,12 +72,73 @@ tableone::CreateTableOne(data = cuse)
 ## A basic barplot
 
 See the [Data Visualization Cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf) for help on enhancing this barplot.
+
+First let's do some work on the data to get it in shape for plotting. I do these 
+one step at a time to show what's happening, but you could also do chain these
+steps all together using the pipe operator (`%>%`).
+
+First, group by age and whether the participant reports wanting more children, and 
+sum the number wanting or not wanting more children in each of these groups. Also
+rename "notUsing" to "not using" to make a nicer legend later.
 ```{r}
-library(ggplot2)
-ggplot(cuse, aes(x=age, y=I(using+notUsing), fill=notUsing)) + 
-  geom_bar(stat="identity")
+library(tidyverse)
+cusebyage <- group_by(cuse, age, wantsMore) %>%
+    summarise(using = sum(using), "not using" = sum(notUsing))
+print(cusebyage)
 ```
 
+Next, pivot this into a longer table by putting the "using" and "not using" columns
+into a single column called "contraceptive".
+```{r}
+cusebyage <- pivot_longer(cusebyage,
+      cols = using:"not using",
+      values_to = "n",
+      names_to = "contraceptive")
+cusebyage
+```
+
+Finally, calculate the percentages reporting contraceptive use in each group. 
+This will provide an alternative way to plot the data.
+```{r}
+cusebyage <- group_by(cusebyage, age, wantsMore) %>% 
+    mutate(percent = n / sum(n) * 100)
+cusebyage
+```
+
+Now, make a sort of fancy greyscale barplot using ggplot2. You can make a nice
+plot without using nearly so many options, but I want to demonstrate the flexibility
+of making a bar plot with ggplot2. 
+```{r}
+ggplot(cusebyage, aes(x = wantsMore, weight = n, fill = contraceptive)) +
+  # create a stacked bar plot, where the values provided are counts/frequencies,
+  # and use black outlines for the bars.
+  geom_bar(position = "stack", stat = "count", color = "black") + 
+  # use facet_grid to separate the plots by age group
+  facet_grid(.~age, labeller = label_both) +
+  labs(title = "Contraceptive usage counts",
+       subtitle = "in Contraceptive Use dataset",
+       caption = "Contraceptive use in study sample") + 
+  xlab("Wants more children?") + 
+  ylab("Number of Participants") +
+  # there are lots of scale_fill_* options for automatic color schemes, but I 
+  # just want to specify the colors manually here.
+  scale_fill_manual(values=c("white", "grey")) +
+  theme_bw()
+```
+**Figure 1: contraceptive use in the study sample.** Bar plot is organized by age 
+group and stacked by self-report of whether participant wants more children. The 
+fraction of women wanting more children decreases with age, becoming a minority in 
+the 40-49 age group. One unexpected observation in this bar chart is that in the
+<25 age group, those reporting wanting more children appear *more* likely to 
+report using contraceptives. Is this the case? One way to make this more visually
+clear would be to use percentages, instead of counts, on the vertical scale. Try
+this, by changing `weight = n` to `weight = percent` to use the "percent" column
+as heights instead of the "n" column. While you're at it, change the y label to
+reflect this change.
+
+
+*Note*: The caption option in *ggplot2* is suitable for smaller, embedded captions. But
+for publication the caption usually needs to be in separated text.
 
 # Problem 1
 
@@ -82,11 +146,23 @@ ggplot(cuse, aes(x=age, y=I(using+notUsing), fill=notUsing)) +
      - Hint: look at the ["Data Transformation Cheatsheet"](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf) functions `mutate`, `group_by`, and `summarize`. This is one of several very handy cheatsheets produced
      by RStudio, see https://rstudio.com/resources/cheatsheets/ for a list.
      
-```{r, message=FALSE}
-library(dplyr)
+
+**Solution**
+
+First create a new column containing the fraction using contraception:
+
+```{r}
 cuse2 <- mutate(cuse, fracusing = using / (using + notUsing))
-cuse2 %>% group_by(age) %>% summarize(mean(fracusing))
+cuse2
 ```
+
+Now, group and summarize by age:
+
+```{r}
+cuse2 %>% group_by(age) %>% summarize(mean(fracusing))
+cuse2
+```
+
 Here the `%>%` is called a "pipe", and it sends the output of the previous function to the input of the next function. This could also have been done in one step:
 
 ```{r}
@@ -102,6 +178,8 @@ Also note that the line breaks are optional: you could put this all on one line,
 # Problem 2
 
 Based on ```fit1```, write on paper the model for expected probability of using birth control? Don't forget the (inverse) logit function.
+
+**Solution**
 
 ```{r}
 fit1 <- glm(
@@ -133,6 +211,8 @@ $\textit{logit}^{-1}(x) = \frac{1}{1+e^{-x}}$
 
 Based on ```fit1```, what is the expected probability of an individual 25-29 years old, with high education, who wants more children, using birth control? Calculate it manually, and using `predict(fit1)`
 
+**Solution**
+
 This can be done using the `predict()` function, using a new `data.frame` giving the values that you want to predict for:
 ```{r}
 invLogit <- function(x) 1/(1+exp(-x))
@@ -161,6 +241,8 @@ res
 
 # Problem 4
 
+**Solution**
+
 Based on ```fit1```: Relative to women under 25 who want to have children, what is the predicted odds ratio for a woman 40-49 years old who does _not_ want to have children will be taking birth control?
 
 ```{r}
@@ -168,6 +250,8 @@ exp( coef(fit1)["age40-49"] - coef(fit1)["wantsMoreyes"])
 ```
 
 # Problem 5
+
+**Solution**
 
 Using a likelihood ratio test, is there evidence that a model with interactions improves on ```fit1``` (no interactions)?
 
@@ -180,6 +264,8 @@ anova(fit1, fit1.int, test="LRT")
 # Problem 6
 
 Which, if any, variables have the strongest interactions? I use the "stargazer" package here which is extremely flexible for showing regression results from all kinds of models, capable of comparing multiple models or multiple dependent variables in the same table, and providing formatting customized to numerous journal styles.
+
+**Solution**
 
 We see here that the strongest interaction coeffient is for `age30-39:wantsMoreyes`. It is statistically significant and negative (`r round(coef(fit1.int)["age30-39:wantsMoreyes"], 2)`). It appears that being 30-39 years old and wanting more children has a multiplicative effect against using birth control, moreso than expected based on the age or wanting more children alone. 
 
@@ -201,6 +287,8 @@ stargazer(fit1, fit1.int, type="html",
 # Problem 7
 
 Create a model matrix for a fit on age only, with contrasts between *every pair* of age groups. Between which age groups is the contrast significant?
+
+**Solution**
 
 ## semi-manually
 
