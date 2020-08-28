@@ -2,17 +2,18 @@
 title: "BIOS 621 / 821 sessions 2-3 lab exercises"
 author: "Levi Waldron"
 output:
-  html_notebook: 
+  html_notebook:
     toc: yes
     fig_caption: yes
     number_sections: yes
     code_folding: hide
-    theme: journal
-editor_options:
-  chunk_output_type: inline
+    theme: readable
+  html_document:
+    toc: yes
+    df_print: paged
 ---
 
-# Lab Exercises - contraceptive use data
+**Lab Exercises - contraceptive use data**
 
 Learning objectives:
 
@@ -23,17 +24,19 @@ Learning objectives:
     + make predictions based on a logistic regression model
 * perform and interpret likelihood ratio test
 
-# Questions
+**Questions**
 
-1. What is the mean fraction of women using birth control for each age group? Each education level? For women who do or don't want more children?
+1. Load the contraceptive use dataset, create a summary table, and a barplot.
+2. What is the mean fraction of women using birth control for each age group? Each education level? For women who do or don't want more children?
      - Hint: look at the "data wrangling" cheat sheet functions `mutate`, `group_by`, and `summarize`
-2. Based on ```fit1```, write on paper the model for expected probability of using birth control.  Don't forget the logit function.
-3. Based on ```fit1```, what is the expected probability of an individual 25-29 years old, with high education, who wants more children, using birth control? Calculate it manually, and using `predict(fit1)`
-4. Based on ```fit1```: Relative to women under 25 who want to have children, what is the predicted increase in odds that a woman 40-49 years old who does _not_ want to have children will be taking birth control?
-5. Using a likelihood ratio test, is there evidence that a model with interactions improves on ```fit1``` (no interactions)?
-6. Which, if any, variables have the strongest interactions?
+3. Based on ```fit1```, write on paper the model for expected probability of using birth control.  Don't forget the logit function.
+4. Based on ```fit1```, what is the expected probability of an individual 25-29 years old, with high education, who wants more children, using birth control? Calculate it manually, and using `predict(fit1)`
+5. Based on ```fit1```: Relative to women under 25 who want to have children, what is the predicted increase in odds that a woman 40-49 years old who does _not_ want to have children will be taking birth control?
+6. Using a likelihood ratio test, is there evidence that a model with interactions improves on ```fit1``` (no interactions)?
+7. Which, if any, variables have the strongest interactions?
+8. Looking at the effect of age only, consider contrasts between *every pair* of age groups. Between which age groups is the contrast significant?
 
-# Loading the contraceptive use data
+# Load and explore the contraceptive use data
 
 Load the data from http://data.princeton.edu/wws509/datasets/#cuse. From this page:
 > These data show the distribution of 1607 currently married and fecund women interviewed in the Fiji Fertility Survey, according to age, education, desire for more children and current use of contraception.
@@ -140,7 +143,7 @@ reflect this change.
 *Note*: The caption option in *ggplot2* is suitable for smaller, embedded captions. But
 for publication the caption usually needs to be in separated text.
 
-# Problem 1
+# What is the mean fraction of women using birth control for...
 
 1. What is the mean fraction of women using birth control for each age group? Each education level? For women who do or don't want more children?
      - Hint: look at the ["Data Transformation Cheatsheet"](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf) functions `mutate`, `group_by`, and `summarize`. This is one of several very handy cheatsheets produced
@@ -175,7 +178,7 @@ Here the result is not stored anywhere; if you wanted to store it in a variable 
 
 Also note that the line breaks are optional: you could put this all on one line, but breaking it up makes it more readable.
 
-# Problem 2
+# Write on paper the model for expected probability of using birth control
 
 Based on ```fit1```, write on paper the model for expected probability of using birth control? Don't forget the (inverse) logit function.
 
@@ -207,7 +210,7 @@ $P = \textit{logit}^{-1} \left(
 
 $\textit{logit}^{-1}(x) = \frac{1}{1+e^{-x}}$
 
-# Problem 3
+# What is the expected probability...
 
 Based on ```fit1```, what is the expected probability of an individual 25-29 years old, with high education, who wants more children, using birth control? Calculate it manually, and using `predict(fit1)`
 
@@ -239,17 +242,18 @@ names(res) <- NULL
 res
 ```
 
-# Problem 4
+# Predicted odds ratio
 
-**Solution**
 
 Based on ```fit1```: Relative to women under 25 who want to have children, what is the predicted odds ratio for a woman 40-49 years old who does _not_ want to have children will be taking birth control?
+
+**Solution**
 
 ```{r}
 exp( coef(fit1)["age40-49"] - coef(fit1)["wantsMoreyes"])
 ```
 
-# Problem 5
+# Likelihood Ratio Test
 
 **Solution**
 
@@ -261,7 +265,7 @@ fit1.int <- glm(cbind(using, notUsing) ~ age * education * wantsMore,
 anova(fit1, fit1.int, test="LRT")
 ```
 
-# Problem 6
+# A model with interactions
 
 Which, if any, variables have the strongest interactions? I use the "stargazer" package here which is extremely flexible for showing regression results from all kinds of models, capable of comparing multiple models or multiple dependent variables in the same table, and providing formatting customized to numerous journal styles.
 
@@ -284,7 +288,7 @@ stargazer(fit1, fit1.int, type="html",
           report="vc*s")  #report the "v"ariable name, "c"oefficient with significance "asterisks", and "s"tandard error (actually replaced by confidence interval because of ci argument above)
 ```
 
-# Problem 7
+# Contrasts between every pair of age groups
 
 Create a model matrix for a fit on age only, with contrasts between *every pair* of age groups. Between which age groups is the contrast significant?
 
