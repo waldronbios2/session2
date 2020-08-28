@@ -1,28 +1,27 @@
 ---
 title: "BIOS 621 / 821 sessions 2-3 lab exercises"
 author: "Levi Waldron"
+subtitle: Analysis of contraceptive use data
 output:
-  html_notebook:
-    toc: yes
-    fig_caption: yes
-    number_sections: yes
-    code_folding: hide
-    theme: readable
   html_document:
     toc: yes
-    df_print: paged
+    theme: cerulean
+    number_sections: yes
 ---
 
-**Lab Exercises - contraceptive use data**
+*Warning*: This lab is long! But it covers methods that you can use 
+throughout the course and on all kinds of regression. It will be the last
+lab of the first quarter of the course, because you can spend a couple weeks
+working through and understanding the contents of this lab.
 
-Learning objectives:
+**Learning objectives**
 
-* gain additional familiarity with R, including `dplyr` and `ggplot2`
-* perform exploratory data analysis in R
-* perform and interpret logistic regression
+1. gain additional familiarity with R, including `dplyr` and `ggplot2`
+2. perform exploratory data analysis in R
+3. perform and interpret logistic regression
     + interpret logistic regression coefficients
     + make predictions based on a logistic regression model
-* perform and interpret likelihood ratio test
+4. perform and interpret likelihood ratio test
 
 **Questions**
 
@@ -195,17 +194,17 @@ fit1 <- glm(
 I'm going to store the coefficients of `fit1` in a new variable `b` just to save typing when writing out the formula, and round to two decimal places:
 
 ```{r}
-b <- round(coef(fit1), 2)
+bcoef <- round(coef(fit1), 2)
 ```
 
 Here I'm going to take advantage of R Markdown's support for LaTeX formulae to write out the fitted regression model. I also use the \` r 2+2 \`     syntax (the result is `r 2+2`) for putting results of R code inline, instead of writing out numbers of the coefficients. I never wrote the number "four", but you'll have to look at the .Rmd to see how I did that! Doing this in reports allows you to update them as input data changes, without having to manually re-enter or copy numbers.
 
 $P = \textit{logit}^{-1} \left( 
-   `r b["(Intercept)"]` + `r b["age25-29"]` \times \textit{age25-29} + 
-   `r b["age30-39"]` \times \textit{age30-39} +
-   `r b["age40-49"]` \times \textit{age40-49} +
-   `r b["educationlow"]` \times \textit{educationlow} +
-   `r b["wantsMoreyes"]` \times \textit{wantsMoreyes} 
+   `r bcoef["(Intercept)"]` + `r bcoef["age25-29"]` \times \textit{age25-29} + 
+   `r bcoef["age30-39"]` \times \textit{age30-39} +
+   `r bcoef["age40-49"]` \times \textit{age40-49} +
+   `r bcoef["educationlow"]` \times \textit{educationlow} +
+   `r bcoef["wantsMoreyes"]` \times \textit{wantsMoreyes} 
    \right)$
 
 $\textit{logit}^{-1}(x) = \frac{1}{1+e^{-x}}$
@@ -231,13 +230,13 @@ invLogit( predict(fit1)[7] )
 If we were really doing this manually, on paper, we would just calculate the linear predictor, then use the inverse logit function. Note that education="high" is the reference group, so we don't use it here:
 
 ```{r}
-invLogit( b["(Intercept)"] + b["age25-29"] + b["wantsMoreyes"] )
+invLogit( bcoef["(Intercept)"] + bcoef["age25-29"] + bcoef["wantsMoreyes"] )
 ```
 
 I don't *really* care, but if the remnant "(Intercept)" name there were annoying me, I would assign this to a variable then get rid of that name:
 
 ```{r}
-res <- invLogit( b["(Intercept)"] + b["age25-29"] + b["wantsMoreyes"] )
+res <- invLogit( bcoef["(Intercept)"] + bcoef["age25-29"] + bcoef["wantsMoreyes"] )
 names(res) <- NULL
 res
 ```
