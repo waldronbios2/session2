@@ -5,11 +5,12 @@ author: "Levi Waldron"
 institute: "CUNY SPH"
 output:
   beamer_presentation:
-    theme: "Hannover"
-    colortheme: "dove"
-    fonttheme: "structurebold"
+    colortheme: dove
+    df_print: paged
+    fonttheme: structurebold
     slide_level: 2
-    df_print: kable
+    theme: Hannover
+  slidy_presentation: default
 ---
 
 # Learning Objectives and Outline

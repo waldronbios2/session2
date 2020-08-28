@@ -1,10 +1,12 @@
 ---
 title: "BIOS 621 / 821 sessions 2-3 lab exercises"
+subtitle: "Analysis of contraceptive use data"
 author: "Levi Waldron"
-subtitle: Analysis of contraceptive use data
+institute: "CUNY SPH"
 output:
   html_document:
     toc: yes
+    df_print: paged
     theme: cerulean
     number_sections: yes
 ---
