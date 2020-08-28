@@ -61,7 +61,9 @@ summary(cuse)
 
 Here's a simple way to create the summary table that is required for your assignments,
 and for any epidemiological analysis you do. The text format is fine, and convenient
-for moving into another pubication or presentation document. See the [tableone vignette](https://cran.r-project.org/web/packages/tableone/vignettes/introduction.html) for more complex usage.
+for moving into another pubication or presentation document. See the [tableone vignette](https://cran.r-project.org/web/packages/tableone/vignettes/introduction.html) 
+for more complex usage and for instructions on how to export directly to an Excel
+or Word table.
 
 
 ```{r}
@@ -127,6 +129,7 @@ ggplot(cusebyage, aes(x = wantsMore, weight = n, fill = contraceptive)) +
   scale_fill_manual(values=c("white", "grey")) +
   theme_bw()
 ```
+
 **Figure 1: contraceptive use in the study sample.** Bar plot is organized by age 
 group and stacked by self-report of whether participant wants more children. The 
 fraction of women wanting more children decreases with age, becoming a minority in 
@@ -144,7 +147,7 @@ for publication the caption usually needs to be in separated text.
 
 # What is the mean fraction of women using birth control for...
 
-1. What is the mean fraction of women using birth control for each age group? Each education level? For women who do or don't want more children?
+What is the mean fraction of women using birth control for each age group? Each education level? For women who do or don't want more children?
      - Hint: look at the ["Data Transformation Cheatsheet"](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf) functions `mutate`, `group_by`, and `summarize`. This is one of several very handy cheatsheets produced
      by RStudio, see https://rstudio.com/resources/cheatsheets/ for a list.
      
@@ -254,9 +257,9 @@ exp( coef(fit1)["age40-49"] - coef(fit1)["wantsMoreyes"])
 
 # Likelihood Ratio Test
 
-**Solution**
-
 Using a likelihood ratio test, is there evidence that a model with interactions improves on ```fit1``` (no interactions)?
+
+**Solution**
 
 ```{r}
 fit1.int <- glm(cbind(using, notUsing) ~ age * education * wantsMore, 
