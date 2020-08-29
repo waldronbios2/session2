@@ -1,0 +1,21 @@
+Package: session2
+Type: Package
+Title: Lecture and lab materials for CUNY Biostatistics 2 session 2
+Version: 0.1.0
+Author: Levi Waldron
+Maintainer: Levi Waldron <lwaldron.research@gmail.com>
+Description: Linear and logistic regression as generalized linear models (GLMs).
+Imports:
+    tidyverse,
+    tableone,
+    stargazer,
+    multcomp
+Suggests:
+    pkgdown,
+    knitr,
+    rmarkdown
+License: CC BY 4.0
+Encoding: UTF-8
+LazyData: true
+URL: https://bios2.waldronlab.io/session2
+VignetteBuilder: knitr
