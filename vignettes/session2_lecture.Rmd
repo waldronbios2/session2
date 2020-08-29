@@ -16,19 +16,17 @@ output:
 
 ## Learning objectives
 
-
-* define generalized linear models (GLM)
-* define linear and logistic regression as special cases of GLMs
-* distinguish between additive and multiplicative models
-* define Pearson and deviance residuals
-* describe application of the Wald test
+1. define generalized linear models (GLM)
+2. define linear and logistic regression as special cases of GLMs
+3. distinguish between additive and multiplicative models
+4. define Pearson and deviance residuals
+5. describe application of the Wald test
 
 ## Outline
 
-
-* Brief overview of multiple regression (Vittinghoff 4.1-4.3)
-* Linear Regression as a Generalized Linear Model (Vittinghoff 4.1-4.3)
-* Statistical inference for logistic regression (Vittinghoff 5.1-5.3)
+1. Brief overview of multiple regression (Vittinghoff 4.1-4.3)
+2. Linear Regression as a Generalized Linear Model (Vittinghoff 4.1-4.3)
+3. Statistical inference for logistic regression (Vittinghoff 5.1-5.3)
 
 # Review of multiple linear regression
 
