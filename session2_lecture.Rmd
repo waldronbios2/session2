@@ -1,8 +1,7 @@
 ---
-title: "BIOS 621 / 821 Session 2"
-subtitle: "Linear and Logistic Regression as Generalized Linear Models"
+title: "Session 2: Linear and logistic regression as Generalized Linear Models"
 author: "Levi Waldron"
-institute: "CUNY SPH"
+institute: "CUNY SPH Biostatistics 2"
 output:
   beamer_presentation:
     colortheme: dove

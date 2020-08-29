@@ -1,8 +1,7 @@
 ---
-title: "BIOS 621 / 821 sessions 2-3 lab exercises"
-subtitle: "Analysis of contraceptive use data"
+title: "Sessions 2-3 lab exercise: Analysis of contraceptive use data"
 author: "Levi Waldron"
-institute: "CUNY SPH"
+institute: "CUNY SPH Biostatistics 2"
 output:
   html_document:
     toc: yes
@@ -41,6 +40,8 @@ working through and understanding the contents of this lab.
 
 Load the data from http://data.princeton.edu/wws509/datasets/#cuse. From this page:
 > These data show the distribution of 1607 currently married and fecund women interviewed in the Fiji Fertility Survey, according to age, education, desire for more children and current use of contraception.
+
+Unlike in the lecture, here I demonstrate reading the dataset using the *readr* package. It identifies some warnings because the header of this file has extra spaces at the end which appear like an extra column, making it appear like the dataset has 6 columns instead of 5. But the dataset reads with 5 columns as we want it to anyways, because I chose to skip the blank column 6 in the graphical interface (which added the code `X6 = col_skip()` below). *readr* is good for identifying problems like this in text data files.
 
 ```{r}
 # traditional method for loading data:
