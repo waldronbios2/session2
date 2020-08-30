@@ -29,6 +29,7 @@ participants using contraceptives among those who do and do not want more childr
 # Load the contraceptive use data
 
 Load the data from http://data.princeton.edu/wws509/datasets/#cuse. From this page:
+
 > These data show the distribution of 1607 currently married and fecund women interviewed in the Fiji Fertility Survey, according to age, education, desire for more children and current use of contraception.
 
 Unlike in the lecture, here I demonstrate reading the dataset using the *readr* package. It identifies some warnings because the header of this file has extra spaces at the end which appear like an extra column, making it appear like the dataset has 6 columns instead of 5. But the dataset reads with 5 columns as we want it to anyways, because I chose to skip the blank column 6 in the graphical interface (which added the code `X6 = col_skip()` below). *readr* is good for identifying problems like this in text data files.
@@ -77,7 +78,7 @@ To summarize, in **tidy data**:
 2. Each observation forms a row.
 3. Each type of observational unit forms a table.
 
-**Messy data** is any other other arrangement of the data. (according to Hadley and the tidyverse!)
+**Messy data** is any other arrangement of the data. (according to Hadley and the tidyverse!)
 
 # Tidy the data
 
