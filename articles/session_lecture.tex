@@ -325,10 +325,16 @@ GLM}\label{logistic-regression-as-a-glm}}
 \protect\hypertarget{the-logistic-regression-model}{}
 
 \begin{itemize}
+\tightlist
 \item
-  \textbf{The model}: \[
+  \textbf{The model}: \tiny \[
   Logit(P(x)) = log \left( \frac{P(x)}{1-P(x)} \right) = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_p x_{pi}
   \]
+\end{itemize}
+
+\normalsize
+
+\begin{itemize}
 \item
   \textbf{Random component}: \(y_i\) follows a Binomial distribution
   (outcome is a binary variable)
@@ -340,6 +346,8 @@ GLM}\label{logistic-regression-as-a-glm}}
   \textbf{Link function}: \emph{logit} (log of the odds that the event
   occurs)
 \end{itemize}
+
+\tiny
 
 \[
 g(P(x)) = logit(P(x)) = log\left( \frac{P(x)}{1-P(x)} \right)
@@ -385,27 +393,6 @@ P(x) = g^{-1}\left( \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_p x_
 \begin{frame}[fragile]{Example: contraceptive use data}
 \protect\hypertarget{example-contraceptive-use-data}{}
 
-Load the contraceptive use data
-
-\tiny
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{suppressPackageStartupMessages}\NormalTok{(}\KeywordTok{library}\NormalTok{(dplyr))}
-\NormalTok{cuse <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"cuse.dat"}\NormalTok{, }\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{)}
-\NormalTok{cuse <-}\StringTok{ }\KeywordTok{mutate}\NormalTok{(cuse, }\DataTypeTok{percentusing =}\NormalTok{ using }\OperatorTok{/}\StringTok{ }\NormalTok{(using }\OperatorTok{+}\StringTok{ }\NormalTok{notUsing) }\OperatorTok{*}\StringTok{ }\DecValTok{100}\NormalTok{) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{n =}\NormalTok{ using }\OperatorTok{+}\StringTok{ }\NormalTok{notUsing)}
-\NormalTok{cuse}
-\end{Highlighting}
-\end{Shaded}
-
-Source: \url{http://data.princeton.edu/wws509/datasets/\#cuse}
-
-\end{frame}
-
-\begin{frame}[fragile]{Table One}
-\protect\hypertarget{table-one}{}
-
 \tiny
 
 \begin{verbatim}
@@ -423,9 +410,7 @@ Source: \url{http://data.princeton.edu/wws509/datasets/\#cuse}
 ##   percentusing (mean (SD)) 38.80 (15.65) 46.95 (23.82)
 \end{verbatim}
 
-\footnotesize
-
-See
+Source: \url{http://data.princeton.edu/wws509/datasets/\#cuse} See
 \href{https://cran.r-project.org/web/packages/tableone/vignettes/introduction.html}{tableone}
 vignette for e.g.~how to export to Word / Excel
 
@@ -435,6 +420,15 @@ vignette for e.g.~how to export to Word / Excel
 
 \begin{frame}[fragile]{Perform regression}
 \protect\hypertarget{perform-regression}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Outcome: whether using contraceptives or not
+\item
+  Predictors: age, education level (high/low), whether wants more
+  children or not
+\end{itemize}
 
 \tiny
 

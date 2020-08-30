@@ -207,9 +207,13 @@ E[y|x] = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_p x_p
 <h2 class="hasAnchor">
 <a href="#the-logistic-regression-model" class="anchor"></a>The logistic regression model</h2>
 <ul>
-<li><p><strong>The model</strong>: <span class="math display">\[
+<li>
+<strong>The model</strong>:  <span class="math display">\[
 Logit(P(x)) = log \left( \frac{P(x)}{1-P(x)} \right) = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_p x_{pi}
-\]</span></p></li>
+\]</span>
+</li>
+</ul>
+<ul>
 <li><p><strong>Random component</strong>: <span class="math inline">\(y_i\)</span> follows a Binomial distribution (outcome is a binary variable)</p></li>
 <li><p><strong>Systematic component</strong>: linear predictor <span class="math display">\[
 \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_p x_{pi}
@@ -242,35 +246,6 @@ P(x) = g^{-1}\left( \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_p x_
 <div id="example-contraceptive-use-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-contraceptive-use-data" class="anchor"></a>Example: contraceptive use data</h2>
-<p>Load the contraceptive use data</p>
-
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>))
-<span class="no">cuse</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span>(<span class="st">"cuse.dat"</span>, <span class="kw">header</span><span class="kw">=</span><span class="fl">TRUE</span>)
-<span class="no">cuse</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="no">cuse</span>, <span class="kw">percentusing</span> <span class="kw">=</span> <span class="no">using</span> / (<span class="no">using</span> + <span class="no">notUsing</span>) * <span class="fl">100</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">n</span> <span class="kw">=</span> <span class="no">using</span> + <span class="no">notUsing</span>)
-<span class="no">cuse</span></pre></body></html></div>
-<pre><code>##      age education wantsMore notUsing using percentusing   n
-## 1    &lt;25       low       yes       53     6     10.16949  59
-## 2    &lt;25       low        no       10     4     28.57143  14
-## 3    &lt;25      high       yes      212    52     19.69697 264
-## 4    &lt;25      high        no       50    10     16.66667  60
-## 5  25-29       low       yes       60    14     18.91892  74
-## 6  25-29       low        no       19    10     34.48276  29
-## 7  25-29      high       yes      155    54     25.83732 209
-## 8  25-29      high        no       65    27     29.34783  92
-## 9  30-39       low       yes      112    33     22.75862 145
-## 10 30-39       low        no       77    80     50.95541 157
-## 11 30-39      high       yes      118    46     28.04878 164
-## 12 30-39      high        no       68    78     53.42466 146
-## 13 40-49       low       yes       35     6     14.63415  41
-## 14 40-49       low        no       46    48     51.06383  94
-## 15 40-49      high       yes        8     8     50.00000  16
-## 16 40-49      high        no       12    31     72.09302  43</code></pre>
-<p>Source: <a href="http://data.princeton.edu/wws509/datasets/#cuse" class="uri">http://data.princeton.edu/wws509/datasets/#cuse</a></p>
-</div>
-<div id="table-one" class="section level2">
-<h2 class="hasAnchor">
-<a href="#table-one" class="anchor"></a>Table One</h2>
 
 <pre><code>##                           Stratified by age
 ##                            Overall       &lt;25           25-29        
@@ -284,15 +259,17 @@ P(x) = g^{-1}\left( \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_p x_
 ##   education = low (%)          2 (50.0)      2 (50.0) 
 ##   wantsMore = yes (%)          2 (50.0)      2 (50.0) 
 ##   percentusing (mean (SD)) 38.80 (15.65) 46.95 (23.82)</code></pre>
-
-<p>See <a href="https://cran.r-project.org/web/packages/tableone/vignettes/introduction.html">tableone</a> vignette for e.g. how to export to Word / Excel</p>
+<p>Source: <a href="http://data.princeton.edu/wws509/datasets/#cuse" class="uri">http://data.princeton.edu/wws509/datasets/#cuse</a> See <a href="https://cran.r-project.org/web/packages/tableone/vignettes/introduction.html">tableone</a> vignette for e.g. how to export to Word / Excel</p>
 <p><a href="https://cran.r-project.org/web/packages/tableone/vignettes/introduction.html" class="uri">https://cran.r-project.org/web/packages/tableone/vignettes/introduction.html</a></p>
 </div>
 <div id="perform-regression" class="section level2">
 <h2 class="hasAnchor">
 <a href="#perform-regression" class="anchor"></a>Perform regression</h2>
-
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">fit1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="no">using</span>, <span class="no">notUsing</span>) ~ <span class="no">age</span> + <span class="no">education</span> + <span class="no">wantsMore</span>,
+<ul>
+<li>Outcome: whether using contraceptives or not</li>
+<li>Predictors: age, education level (high/low), whether wants more children or not</li>
+</ul>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">fit1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="no">using</span>, <span class="no">notUsing</span>) ~ <span class="no">age</span> + <span class="no">education</span> + <span class="no">wantsMore</span>,
            <span class="kw">data</span><span class="kw">=</span><span class="no">cuse</span>, <span class="kw">family</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span>(<span class="st">"logit"</span>))
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">fit1</span>)</pre></body></html></div>
 <pre><code>## 
@@ -399,7 +376,7 @@ d_i = s_i \sqrt{ -2 ( y_i \log \hat y_i + (1-y_i) \log (1 - \hat y_i) ) }
 <h2 class="hasAnchor">
 <a href="#likelihood-ratio-test-contd" class="anchor"></a>Likelihood Ratio Test (cont’d)</h2>
 
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">fit0</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="no">using</span>, <span class="no">notUsing</span>) ~ -<span class="fl">1</span>, <span class="kw">data</span><span class="kw">=</span><span class="no">cuse</span>,
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">fit0</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="no">using</span>, <span class="no">notUsing</span>) ~ -<span class="fl">1</span>, <span class="kw">data</span><span class="kw">=</span><span class="no">cuse</span>,
             <span class="kw">family</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span>(<span class="st">"logit"</span>))
 <span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span>(<span class="no">fit0</span>, <span class="no">fit1</span>, <span class="kw">test</span><span class="kw">=</span><span class="st">"LRT"</span>)</pre></body></html></div>
 <pre><code>## Analysis of Deviance Table
