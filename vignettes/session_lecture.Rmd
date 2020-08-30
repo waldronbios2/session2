@@ -25,8 +25,9 @@ output:
 ## Outline
 
 1. Brief overview of multiple regression (Vittinghoff 4.1-4.3)
-2. Linear Regression as a Generalized Linear Model (Vittinghoff 4.1-4.3)
-3. Statistical inference for logistic regression (Vittinghoff 5.1-5.3)
+2. Linear Regression as a GLM (Vittinghoff 4.1-4.3)
+3. Logistic Regression as a GLM (Vittinghoff 5.1-5.3)
+4. Statistical inference for logistic regression (Vittinghoff 5.1-5.3)
 
 # Review of multiple linear regression
 
