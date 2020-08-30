@@ -2,14 +2,6 @@
   [![Actions Status](https://github.com/waldronbios2/session2/workflows/Render%20and%20Deploy%20pkgdown%20Website/badge.svg)](https://github.com/waldronbios2/template_session/actions)
   <!-- badges: end -->
 
-# Key links
-
-* [The full collection of course notes](https://waldronbios2.github.io/cunybios2/)
-* [This session's web page](https://waldronbios2.github.io/session2/)
-* [This session's GitHub page](https://github.com/waldronbios2/session2)
-* The URL to clone this session locally using `git` is https://github.com/waldronbios2/session2.git
-    + Note: code is in the "vignettes" folder
-
 # Session 2: Linear and logistic regression as Generalized Linear Models
 
 ## Lecture
