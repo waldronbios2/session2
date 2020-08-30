@@ -112,7 +112,10 @@
 <div id="load-the-contraceptive-use-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#load-the-contraceptive-use-data" class="anchor"></a>Load the contraceptive use data</h1>
-<p>Load the data from <a href="http://data.princeton.edu/wws509/datasets/#cuse" class="uri">http://data.princeton.edu/wws509/datasets/#cuse</a>. From this page: &gt; These data show the distribution of 1607 currently married and fecund women interviewed in the Fiji Fertility Survey, according to age, education, desire for more children and current use of contraception.</p>
+<p>Load the data from <a href="http://data.princeton.edu/wws509/datasets/#cuse" class="uri">http://data.princeton.edu/wws509/datasets/#cuse</a>. From this page:</p>
+<blockquote>
+<p>These data show the distribution of 1607 currently married and fecund women interviewed in the Fiji Fertility Survey, according to age, education, desire for more children and current use of contraception.</p>
+</blockquote>
 <p>Unlike in the lecture, here I demonstrate reading the dataset using the <em>readr</em> package. It identifies some warnings because the header of this file has extra spaces at the end which appear like an extra column, making it appear like the dataset has 6 columns instead of 5. But the dataset reads with 5 columns as we want it to anyways, because I chose to skip the blank column 6 in the graphical interface (which added the code <code>X6 = col_skip()</code> below). <em>readr</em> is good for identifying problems like this in text data files.</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># traditional method for loading data:</span>
 <span class="co"># cuse &lt;- read.table("cuse.dat", header=TRUE)</span>
@@ -175,7 +178,7 @@
 <p>Happy families are all alike; every unhappy family is unhappy in its own way - Leo Tolstoy</p>
 </blockquote>
 <p>To summarize, in <strong>tidy data</strong>: 1. Each variable forms a column. 2. Each observation forms a row. 3. Each type of observational unit forms a table.</p>
-<p><strong>Messy data</strong> is any other other arrangement of the data. (according to Hadley and the tidyverse!)</p>
+<p><strong>Messy data</strong> is any other arrangement of the data. (according to Hadley and the tidyverse!)</p>
 </div>
 <div id="tidy-the-data" class="section level1">
 <h1 class="hasAnchor">
