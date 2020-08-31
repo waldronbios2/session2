@@ -6,6 +6,7 @@ jobs:
     steps:
       - name: trigger action on main site
         run: |
+           echo $HELLO
            curl -XPOST -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/waldronbios2/cunybios2/dispatches --data '{"event_type": "build_application"}'
       - name: Checkout Repository
         uses: actions/checkout@v1
