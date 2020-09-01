@@ -1,5 +1,5 @@
 ---
-title: "Sessions 2 lab exercise: Exploration of contraceptive use data"
+title: "Session 2 lab exercise: Exploration of contraceptive use data"
 author: "Levi Waldron"
 institute: "CUNY SPH Biostatistics 2"
 output:
