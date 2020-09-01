@@ -11,14 +11,10 @@ jobs:
           echo $SUPER_SECRET
           echo "${{ secrets.HELLO }}"
       - name: trigger action on main site
-        with:
-          username: ${{ secrets.PAT_USERNAME }}
-          token: ${{ secrets.PAT_TOKEN }}
         run: |
           curl \
             -X POST \
-#            -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" \
-            -u "$username:token" \
+            -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" \
             -H "Accept: application/vnd.github.v3+json" \
             -d '{"ref":"master"}' \
             https://api.github.com/repos/waldronbios2/cunybios2/actions/workflows/build.yaml/dispatches
