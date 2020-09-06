@@ -1,6 +1,6 @@
-  <!-- badges: start -->
-  [![Actions Status](https://github.com/waldronbios2/session2/workflows/build/badge.svg)](https://github.com/waldronbios2/template_session/actions)
-  <!-- badges: end -->
+<!-- badges: start -->
+[![Actions Status](https://github.com/waldronbios2/session2/workflows/build/badge.svg)](https://github.com/waldronbios2/template_session/actions)
+<!-- badges: end -->
 
 # Session 2: Linear and logistic regression as Generalized Linear Models
 
