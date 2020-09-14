@@ -123,19 +123,21 @@
 <p>These data show the distribution of 1607 currently married and fecund women interviewed in the Fiji Fertility Survey, according to age, education, desire for more children and current use of contraception.</p>
 </blockquote>
 <p>Unlike in the lecture, here I demonstrate reading the dataset using the <em>readr</em> package. It identifies some warnings because the header of this file has extra spaces at the end which appear like an extra column, making it appear like the dataset has 6 columns instead of 5. But the dataset reads with 5 columns as we want it to anyways, because I chose to skip the blank column 6 in the graphical interface (which added the code <code>X6 = col_skip()</code> below). <em>readr</em> is good for identifying problems like this in text data files.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># traditional method for loading data:</span>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="co"># traditional method for loading data:</span>
 <span class="co"># cuse &lt;- read.table("cuse.dat", header=TRUE)</span>
 <span class="co"># Using readr package with "File - Import Dataset" and manually setting factor levels.</span>
 <span class="co"># Note, you don't have to write all this code by hand! It was produced by the File - Import Dataset helper.</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">readr</span>)
-<span class="no">cuse</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_table.html">read_table2</a></span>(<span class="st">"cuse.dat"</span>,
-    <span class="kw">col_types</span> <span class="kw">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span>(
-      <span class="kw">age</span> <span class="kw">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_factor.html">col_factor</a></span>(<span class="kw">levels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"&lt;25"</span>, <span class="st">"25-29"</span>, <span class="st">"30-39"</span>, <span class="st">"40-49"</span>)),
-      <span class="kw">education</span> <span class="kw">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_factor.html">col_factor</a></span>(<span class="kw">levels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"low"</span>, <span class="st">"high"</span>)),
-      <span class="kw">wantsMore</span> <span class="kw">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_factor.html">col_factor</a></span>(<span class="kw">levels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"no"</span>, <span class="st">"yes"</span>)),
-      <span class="kw">X6</span> <span class="kw">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/col_skip.html">col_skip</a></span>()
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://readr.tidyverse.org">readr</a></span>)
+<span class="kw">cuse</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_table.html">read_table2</a></span>(<span class="st">"cuse.dat"</span>,
+    col_types = <span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span>(
+      age = <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_factor.html">col_factor</a></span>(levels = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"&lt;25"</span>, <span class="st">"25-29"</span>, <span class="st">"30-39"</span>, <span class="st">"40-49"</span>)),
+      education = <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_factor.html">col_factor</a></span>(levels = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"low"</span>, <span class="st">"high"</span>)),
+      wantsMore = <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_factor.html">col_factor</a></span>(levels = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"no"</span>, <span class="st">"yes"</span>)),
+      X6 = <span class="fu"><a href="https://readr.tidyverse.org/reference/col_skip.html">col_skip</a></span>()
     )
-  )</pre></body></html></div>
+  )
+</pre></div>
 <pre><code>## Warning: Missing column names filled in: 'X6' [6]</code></pre>
 <pre><code>## Warning: 16 parsing failures.
 ## row col  expected    actual       file
@@ -146,7 +148,9 @@
 ##   5  -- 6 columns 5 columns 'cuse.dat'
 ## ... ... ......... ......... ..........
 ## See problems(...) for more details.</code></pre>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">cuse</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">cuse</span>)
+</pre></div>
 <pre><code>##     age    education wantsMore    notUsing          using      
 ##  &lt;25  :4   low :8    no :8     Min.   :  8.00   Min.   : 4.00  
 ##  25-29:4   high:8    yes:8     1st Qu.: 31.00   1st Qu.: 9.50  
@@ -159,9 +163,11 @@
 <h1 class="hasAnchor">
 <a href="#create-an-epi-table-1" class="anchor"></a>Create an epi “Table 1”</h1>
 <p>Here’s a simple way to create the summary table that is required for your assignments, and for any epidemiological analysis you do. The text format is fine, and convenient for moving into another pubication or presentation document. See the <a href="https://cran.r-project.org/web/packages/tableone/vignettes/introduction.html">tableone vignette</a> for more complex usage and for instructions on how to export directly to an Excel or Word table.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co"># Note the use of `tableone::` to specify that `CreateTableOne` comes from the </span>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="co"># Note the use of `tableone::` to specify that `CreateTableOne` comes from the </span>
 <span class="co"># tableone library without actually loading the library.</span>
-<span class="kw pkg">tableone</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/tableone/man/CreateTableOne.html">CreateTableOne</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">cuse</span>)</pre></body></html></div>
+<span class="kw">tableone</span>::<span class="fu"><a href="https://rdrr.io/pkg/tableone/man/CreateTableOne.html">CreateTableOne</a></span>(data = <span class="kw">cuse</span>)
+</pre></div>
 <pre><code>##                       
 ##                        Overall      
 ##   n                       16        
@@ -191,7 +197,9 @@
 <a href="#tidy-the-data" class="anchor"></a>Tidy the data</h1>
 <p>First let’s do some work on the data to get it in shape for plotting. I do these one step at a time to show what’s happening, but you could also do chain these steps all together using the pipe operator (<code>%&gt;%</code>).</p>
 <p>First, group by age and whether the participant reports wanting more children, and sum the number wanting or not wanting more children in each of these groups. Also rename “notUsing” to “not using” to make a nicer legend later.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span>)
+</pre></div>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.3.2     ✔ dplyr   1.0.2
 ## ✔ tibble  3.0.3     ✔ stringr 1.4.0
@@ -200,10 +208,14 @@
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">cusebyage</span> <span class="kw">&lt;-</span> <span class="fu">group_by</span>(<span class="no">cuse</span>, <span class="no">age</span>, <span class="no">wantsMore</span>) <span class="kw">%&gt;%</span>
-    <span class="fu">summarise</span>(<span class="kw">using</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="no">using</span>), <span class="st">"not using"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="no">notUsing</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="kw">cusebyage</span> <span class="op">&lt;-</span> <span class="fu">group_by</span>(<span class="kw">cuse</span>, <span class="kw">age</span>, <span class="kw">wantsMore</span>) <span class="op">%&gt;%</span>
+    <span class="fu">summarise</span>(using = <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">using</span>), <span class="st">"not using"</span> = <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">notUsing</span>))
+</pre></div>
 <pre><code>## `summarise()` regrouping output by 'age' (override with `.groups` argument)</code></pre>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">cusebyage</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb14"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw">cusebyage</span>)
+</pre></div>
 <pre><code>## # A tibble: 8 x 4
 ## # Groups:   age [4]
 ##   age   wantsMore using `not using`
@@ -217,11 +229,13 @@
 ## 7 40-49 no           79          58
 ## 8 40-49 yes          14          43</code></pre>
 <p>Next, pivot this into a longer table by putting the “using” and “not using” columns into a single column called “contraceptive”. This pivot is necessary to make the data “tidy”.</p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">cusebyage</span> <span class="kw">&lt;-</span> <span class="fu">pivot_longer</span>(<span class="no">cusebyage</span>,
-      <span class="kw">cols</span> <span class="kw">=</span> <span class="no">using</span>:<span class="st">"not using"</span>,
-      <span class="kw">values_to</span> <span class="kw">=</span> <span class="st">"n"</span>,
-      <span class="kw">names_to</span> <span class="kw">=</span> <span class="st">"contraceptive"</span>)
-<span class="no">cusebyage</span></pre></body></html></div>
+<div class="sourceCode" id="cb16"><pre class="downlit">
+<span class="kw">cusebyage</span> <span class="op">&lt;-</span> <span class="fu">pivot_longer</span>(<span class="kw">cusebyage</span>,
+      cols = <span class="kw">using</span><span class="op">:</span><span class="st">"not using"</span>,
+      values_to = <span class="st">"n"</span>,
+      names_to = <span class="st">"contraceptive"</span>)
+<span class="kw">cusebyage</span>
+</pre></div>
 <pre><code>## # A tibble: 16 x 4
 ## # Groups:   age [4]
 ##    age   wantsMore contraceptive     n
@@ -248,21 +262,23 @@
 <a href="#create-a-barplot" class="anchor"></a>Create a barplot</h1>
 <p>See the <a href="https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf">Data Visualization Cheatsheet</a> for help on enhancing this barplot.</p>
 <p>Now, make a sort of fancy greyscale barplot using ggplot2. You can make a nice plot without using nearly so many options, but I want to demonstrate the flexibility of making a bar plot with ggplot2.</p>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">cusebyage</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">wantsMore</span>, <span class="kw">weight</span> <span class="kw">=</span> <span class="no">n</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="no">contraceptive</span>)) +
+<div class="sourceCode" id="cb18"><pre class="downlit">
+<span class="fu">ggplot</span>(<span class="kw">cusebyage</span>, <span class="fu">aes</span>(x = <span class="kw">wantsMore</span>, weight = <span class="kw">n</span>, fill = <span class="kw">contraceptive</span>)) <span class="op">+</span>
   <span class="co"># create a stacked bar plot, where the values provided are counts/frequencies,</span>
   <span class="co"># and use black outlines for the bars.</span>
-  <span class="fu">geom_bar</span>(<span class="kw">position</span> <span class="kw">=</span> <span class="st">"stack"</span>, <span class="kw">stat</span> <span class="kw">=</span> <span class="st">"count"</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"black"</span>) +
+  <span class="fu">geom_bar</span>(position = <span class="st">"stack"</span>, stat = <span class="st">"count"</span>, color = <span class="st">"black"</span>) <span class="op">+</span> 
   <span class="co"># use facet_grid to separate the plots by age group</span>
-  <span class="fu">facet_grid</span>(<span class="no">.</span>~<span class="no">age</span>, <span class="kw">labeller</span> <span class="kw">=</span> <span class="no">label_both</span>) +
-  <span class="fu">labs</span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"Contraceptive usage counts"</span>,
-       <span class="kw">subtitle</span> <span class="kw">=</span> <span class="st">"in Contraceptive Use dataset"</span>,
-       <span class="kw">caption</span> <span class="kw">=</span> <span class="st">"Contraceptive use in study sample"</span>) +
-  <span class="fu">xlab</span>(<span class="st">"Wants more children?"</span>) +
-  <span class="fu">ylab</span>(<span class="st">"Number of Participants"</span>) +
+  <span class="fu">facet_grid</span>(<span class="kw">.</span><span class="op">~</span><span class="kw">age</span>, labeller = <span class="kw">label_both</span>) <span class="op">+</span>
+  <span class="fu">labs</span>(title = <span class="st">"Contraceptive usage counts"</span>,
+       subtitle = <span class="st">"in Contraceptive Use dataset"</span>,
+       caption = <span class="st">"Contraceptive use in study sample"</span>) <span class="op">+</span> 
+  <span class="fu">xlab</span>(<span class="st">"Wants more children?"</span>) <span class="op">+</span> 
+  <span class="fu">ylab</span>(<span class="st">"Number of Participants"</span>) <span class="op">+</span>
   <span class="co"># there are lots of scale_fill_* options for automatic color schemes, but I </span>
   <span class="co"># just want to specify the colors manually here.</span>
-  <span class="fu">scale_fill_manual</span>(<span class="kw">values</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"white"</span>, <span class="st">"grey"</span>)) +
-  <span class="fu">theme_bw</span>()</pre></body></html></div>
+  <span class="fu">scale_fill_manual</span>(values=<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"white"</span>, <span class="st">"grey"</span>)) <span class="op">+</span>
+  <span class="fu">theme_bw</span>()
+</pre></div>
 <p><img src="session_lab_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p><strong>Figure 1: contraceptive use in the study sample.</strong> Bar plot is organized by age group and stacked by self-report of whether participant wants more children. The fraction of women wanting more children decreases with age, becoming a minority in the 40-49 age group. One unexpected observation in this bar chart is that in the &lt;25 age group, those reporting wanting more children appear <em>more</em> likely to report using contraceptives. Is this the case? One way to make this more visually clear would be to use percentages, instead of counts, on the vertical scale. Try this, by changing <code>weight = n</code> to <code>weight = percent</code> to use the “percent” column as heights instead of the “n” column. While you’re at it, change the y label to reflect this change.</p>
 <p><em>Note</em>: The caption option in <em>ggplot2</em> is suitable for smaller, embedded captions. But for publication the caption usually needs to be in separated text.</p>
@@ -271,9 +287,11 @@
 <h1 class="hasAnchor">
 <a href="#try-yourself-plot-percentages-instead-of-counts" class="anchor"></a>Try yourself: plot percentages instead of counts</h1>
 <p>Here’s some code to calculate the percentages.</p>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">cusebyage</span> <span class="kw">&lt;-</span> <span class="fu">group_by</span>(<span class="no">cusebyage</span>, <span class="no">age</span>, <span class="no">wantsMore</span>) <span class="kw">%&gt;%</span>
-    <span class="fu">mutate</span>(<span class="kw">percent</span> <span class="kw">=</span> <span class="no">n</span> / <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="no">n</span>) * <span class="fl">100</span>)
-<span class="no">cusebyage</span></pre></body></html></div>
+<div class="sourceCode" id="cb19"><pre class="downlit">
+<span class="kw">cusebyage</span> <span class="op">&lt;-</span> <span class="fu">group_by</span>(<span class="kw">cusebyage</span>, <span class="kw">age</span>, <span class="kw">wantsMore</span>) <span class="op">%&gt;%</span> 
+    <span class="fu">mutate</span>(percent = <span class="kw">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">n</span>) <span class="op">*</span> <span class="fl">100</span>)
+<span class="kw">cusebyage</span>
+</pre></div>
 <pre><code>## # A tibble: 16 x 5
 ## # Groups:   age, wantsMore [8]
 ##    age   wantsMore contraceptive     n percent
@@ -313,7 +331,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>
