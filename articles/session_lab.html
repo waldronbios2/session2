@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">session2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -87,7 +87,8 @@
 
       
 
-      </header><script src="session_lab_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="session_lab_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="session_lab_files/table1-1.0/table1_defaults.css" rel="stylesheet">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Session 2 lab exercise: Exploration of contraceptive use data</h1>
@@ -105,7 +106,7 @@
 <ol style="list-style-type: decimal">
 <li>Define “tidy” data</li>
 <li>Load a dataset in R and perform basic exploratory data analysis</li>
-<li>Create descriptive “Table 1” of a study sample using the <code>tableone</code> package</li>
+<li>Create descriptive “Table 1” of a study sample using the <code>table1</code> package</li>
 <li>Create a customized bar plot using the <code>ggplot2</code> package</li>
 </ol>
 <p><strong>Exercises</strong></p>
@@ -160,24 +161,94 @@
 <div id="create-an-epi-table-1" class="section level1">
 <h1 class="hasAnchor">
 <a href="#create-an-epi-table-1" class="anchor"></a>Create an epi “Table 1”</h1>
-<p>Here’s a simple way to create the summary table that is required for your assignments, and for any epidemiological analysis you do. The text format is fine, and convenient for moving into another pubication or presentation document. See the <a href="https://cran.r-project.org/web/packages/tableone/vignettes/introduction.html">tableone vignette</a> for more complex usage and for instructions on how to export directly to an Excel or Word table.</p>
+<p>Here’s a simple way to create the summary table that is required for your assignments, and for any epidemiological analysis you do. The text format is fine, and convenient for moving into another pubication or presentation document. See the <a href="https://cran.r-project.org/web/packages/table1/vignettes/table1-examples.html">table1 vignette</a> for more examples.</p>
+<p>WARNING: the counts in this table are incorrect, because each row corresponds to a number of counts of women using and not using contraceptives. We do this just to demo the table1 package, then make a correct table below after reshaping this dataset.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="co"># Note the use of `tableone::` to specify that `CreateTableOne` comes from the </span>
-<span class="co"># tableone library without actually loading the library.</span>
-<span class="fu">tableone</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tableone/man/CreateTableOne.html">CreateTableOne</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">cuse</span><span class="op">)</span></pre></div>
-<pre><code>##                       
-##                        Overall      
-##   n                       16        
-##   age (%)                           
-##      &lt;25                   4 (25.0) 
-##      25-29                 4 (25.0) 
-##      30-39                 4 (25.0) 
-##      40-49                 4 (25.0) 
-##   education = high (%)     8 (50.0) 
-##   wantsMore = yes (%)      8 (50.0) 
-##   notUsing (mean (SD)) 68.75 (56.28)
-##   using (mean (SD))    31.69 (25.54)</code></pre>
-<p><strong>Table 1: characteristics of the contraceptive use dataset</strong></p>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/benjaminrich/table1">table1</a></span><span class="op">)</span></pre></div>
+<pre><code>## 
+## Attaching package: 'table1'</code></pre>
+<pre><code>## The following objects are masked from 'package:base':
+## 
+##     units, units&lt;-</code></pre>
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/pkg/table1/man/table1.html">table1</a></span><span class="op">(</span><span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">cuse</span><span class="op">)</span></pre></div>
+<p></p>
+<div class="Rtable1"><table class="table Rtable1">
+<thead><tr>
+<th class="rowlabel firstrow lastrow"></th>
+<th class="firstrow lastrow"><span class="stratlabel">Overall<br><span class="stratn">(N=16)</span></span></th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">age</span></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">&lt;25</td>
+<td>4 (25.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">25-29</td>
+<td>4 (25.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">30-39</td>
+<td>4 (25.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">40-49</td>
+<td class="lastrow">4 (25.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">education</span></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">low</td>
+<td>8 (50.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">high</td>
+<td class="lastrow">8 (50.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">wantsMore</span></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">no</td>
+<td>8 (50.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">yes</td>
+<td class="lastrow">8 (50.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">notUsing</span></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>68.8 (56.3)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Median [Min, Max]</td>
+<td class="lastrow">56.5 [8.00, 212]</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">using</span></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>31.7 (25.5)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Median [Min, Max]</td>
+<td class="lastrow">29.0 [4.00, 80.0]</td>
+</tr>
+</tbody>
+</table></div> <strong>Table 1: characteristics of the contraceptive use dataset. Note, these counts correspond to number of rows in the dataset, <em>not</em> numbers of participants</strong>
 </div>
 <div id="definition-of-tidy-data" class="section level1">
 <h1 class="hasAnchor">
@@ -194,68 +265,184 @@
 <a href="#tidy-the-data" class="anchor"></a>Tidy the data</h1>
 <p>First let’s do some work on the data to get it in shape for plotting. I do these one step at a time to show what’s happening, but you could also do chain these steps all together using the pipe operator (<code>%&gt;%</code>).</p>
 <p>First, group by age and whether the participant reports wanting more children, and sum the number wanting or not wanting more children in each of these groups. Also rename “notUsing” to “not using” to make a nicer legend later.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
+<div class="sourceCode" id="cb10"><pre class="downlit">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></pre></div>
+<pre><code>## Warning: package 'tidyverse' was built under R version 4.0.3</code></pre>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.3.2     ✔ dplyr   1.0.2
-## ✔ tibble  3.0.4     ✔ stringr 1.4.0
+## ✔ tibble  3.0.3     ✔ stringr 1.4.0
 ## ✔ tidyr   1.1.2     ✔ forcats 0.5.0
 ## ✔ purrr   0.3.4</code></pre>
+<pre><code>## Warning: package 'purrr' was built under R version 4.0.3</code></pre>
+<pre><code>## Warning: package 'stringr' was built under R version 4.0.3</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="va">cusebyage</span> <span class="op">&lt;-</span> <span class="fu">group_by</span><span class="op">(</span><span class="va">cuse</span>, <span class="va">age</span>, <span class="va">wantsMore</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<div class="sourceCode" id="cb17"><pre class="downlit">
+<span class="va">cusebyage0</span> <span class="op">&lt;-</span> <span class="fu">group_by</span><span class="op">(</span><span class="va">cuse</span>, <span class="va">age</span>, <span class="va">education</span>, <span class="va">wantsMore</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="fu">summarise</span><span class="op">(</span>using <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">using</span><span class="op">)</span>, <span class="st">"not using"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">notUsing</span><span class="op">)</span><span class="op">)</span></pre></div>
-<pre><code>## `summarise()` regrouping output by 'age' (override with `.groups` argument)</code></pre>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">cusebyage</span><span class="op">)</span></pre></div>
-<pre><code>## # A tibble: 8 x 4
-## # Groups:   age [4]
-##   age   wantsMore using `not using`
-##   &lt;fct&gt; &lt;fct&gt;     &lt;dbl&gt;       &lt;dbl&gt;
-## 1 &lt;25   no           14          60
-## 2 &lt;25   yes          58         265
-## 3 25-29 no           37          84
-## 4 25-29 yes          68         215
-## 5 30-39 no          158         145
-## 6 30-39 yes          79         230
-## 7 40-49 no           79          58
-## 8 40-49 yes          14          43</code></pre>
+<pre><code>## `summarise()` regrouping output by 'age', 'education' (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb19"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">cusebyage0</span><span class="op">)</span></pre></div>
+<pre><code>## # A tibble: 16 x 5
+## # Groups:   age, education [8]
+##    age   education wantsMore using `not using`
+##    &lt;fct&gt; &lt;fct&gt;     &lt;fct&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+##  1 &lt;25   low       no            4          10
+##  2 &lt;25   low       yes           6          53
+##  3 &lt;25   high      no           10          50
+##  4 &lt;25   high      yes          52         212
+##  5 25-29 low       no           10          19
+##  6 25-29 low       yes          14          60
+##  7 25-29 high      no           27          65
+##  8 25-29 high      yes          54         155
+##  9 30-39 low       no           80          77
+## 10 30-39 low       yes          33         112
+## 11 30-39 high      no           78          68
+## 12 30-39 high      yes          46         118
+## 13 40-49 low       no           48          46
+## 14 40-49 low       yes           6          35
+## 15 40-49 high      no           31          12
+## 16 40-49 high      yes           8           8</code></pre>
 <p>Next, pivot this into a longer table by putting the “using” and “not using” columns into a single column called “contraceptive”. This pivot is necessary to make the data “tidy”.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="va">cusebyage</span> <span class="op">&lt;-</span> <span class="fu">pivot_longer</span><span class="op">(</span><span class="va">cusebyage</span>,
+<div class="sourceCode" id="cb21"><pre class="downlit">
+<span class="va">cusebyage</span> <span class="op">&lt;-</span> <span class="fu">pivot_longer</span><span class="op">(</span><span class="va">cusebyage0</span>,
       cols <span class="op">=</span> <span class="va">using</span><span class="op">:</span><span class="st">"not using"</span>,
       values_to <span class="op">=</span> <span class="st">"n"</span>,
       names_to <span class="op">=</span> <span class="st">"contraceptive"</span><span class="op">)</span>
 <span class="va">cusebyage</span></pre></div>
-<pre><code>## # A tibble: 16 x 4
-## # Groups:   age [4]
-##    age   wantsMore contraceptive     n
-##    &lt;fct&gt; &lt;fct&gt;     &lt;chr&gt;         &lt;dbl&gt;
-##  1 &lt;25   no        using            14
-##  2 &lt;25   no        not using        60
-##  3 &lt;25   yes       using            58
-##  4 &lt;25   yes       not using       265
-##  5 25-29 no        using            37
-##  6 25-29 no        not using        84
-##  7 25-29 yes       using            68
-##  8 25-29 yes       not using       215
-##  9 30-39 no        using           158
-## 10 30-39 no        not using       145
-## 11 30-39 yes       using            79
-## 12 30-39 yes       not using       230
-## 13 40-49 no        using            79
-## 14 40-49 no        not using        58
-## 15 40-49 yes       using            14
-## 16 40-49 yes       not using        43</code></pre>
+<pre><code>## # A tibble: 32 x 5
+## # Groups:   age, education [8]
+##    age   education wantsMore contraceptive     n
+##    &lt;fct&gt; &lt;fct&gt;     &lt;fct&gt;     &lt;chr&gt;         &lt;dbl&gt;
+##  1 &lt;25   low       no        using             4
+##  2 &lt;25   low       no        not using        10
+##  3 &lt;25   low       yes       using             6
+##  4 &lt;25   low       yes       not using        53
+##  5 &lt;25   high      no        using            10
+##  6 &lt;25   high      no        not using        50
+##  7 &lt;25   high      yes       using            52
+##  8 &lt;25   high      yes       not using       212
+##  9 25-29 low       no        using            10
+## 10 25-29 low       no        not using        19
+## # … with 22 more rows</code></pre>
+</div>
+<div id="a-correct-table-1" class="section level1">
+<h1 class="hasAnchor">
+<a href="#a-correct-table-1" class="anchor"></a>A correct table 1</h1>
+<p>We can finally make a correct table1 with <em>one</em> more transformation, uncounting on the <code>n</code> column (using the tidyr package again). Also, we use <code>label</code> from the <code>table1</code> package to make more informative and readable labels. For interest, this time we stratify based on wanting more children, and add a caption. See <code><a href="https://rdrr.io/r/base/table.html">?table</a></code> for more options.</p>
+<div class="sourceCode" id="cb23"><pre class="downlit">
+<span class="va">cuseverylong</span> <span class="op">&lt;-</span> <span class="fu">uncount</span><span class="op">(</span><span class="va">cusebyage</span>, <span class="va">n</span><span class="op">)</span> <span class="co">#from the tidyr package</span>
+<span class="fu"><a href="https://rdrr.io/pkg/table1/man/label.html">label</a></span><span class="op">(</span><span class="va">cuseverylong</span><span class="op">$</span><span class="va">age</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"Age (years)"</span>
+<span class="fu"><a href="https://rdrr.io/pkg/table1/man/label.html">label</a></span><span class="op">(</span><span class="va">cuseverylong</span><span class="op">$</span><span class="va">education</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"Education level"</span>
+<span class="fu"><a href="https://rdrr.io/pkg/table1/man/label.html">label</a></span><span class="op">(</span><span class="va">cuseverylong</span><span class="op">$</span><span class="va">wantsMore</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"Wants more children?"</span>
+<span class="fu"><a href="https://rdrr.io/pkg/table1/man/label.html">label</a></span><span class="op">(</span><span class="va">cuseverylong</span><span class="op">$</span><span class="va">contraceptive</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"Using contraceptives?"</span>
+<span class="fu"><a href="https://rdrr.io/pkg/table1/man/table1.html">table1</a></span><span class="op">(</span><span class="op">~</span> <span class="va">.</span> <span class="op">|</span> <span class="va">wantsMore</span>, rowlabelhead <span class="op">=</span> <span class="st">"Wants more children?"</span>, 
+       caption <span class="op">=</span> <span class="st">"Table 1: Participants in the contraceptive use study"</span>,
+       data <span class="op">=</span> <span class="va">cuseverylong</span><span class="op">)</span></pre></div>
+<div class="Rtable1"><table class="table Rtable1">
+<caption>Table 1: Participants in the contraceptive use study</caption>
+
+<thead><tr>
+<th class="rowlabel firstrow lastrow">Wants more children?</th>
+<th class="firstrow lastrow"><span class="stratlabel">no<br><span class="stratn">(N=635)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">yes<br><span class="stratn">(N=972)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Overall<br><span class="stratn">(N=1607)</span></span></th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Age (years)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">&lt;25</td>
+<td>74 (11.7%)</td>
+<td>323 (33.2%)</td>
+<td>397 (24.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel">25-29</td>
+<td>121 (19.1%)</td>
+<td>283 (29.1%)</td>
+<td>404 (25.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel">30-39</td>
+<td>303 (47.7%)</td>
+<td>309 (31.8%)</td>
+<td>612 (38.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">40-49</td>
+<td class="lastrow">137 (21.6%)</td>
+<td class="lastrow">57 (5.9%)</td>
+<td class="lastrow">194 (12.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Education level</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">low</td>
+<td>294 (46.3%)</td>
+<td>319 (32.8%)</td>
+<td>613 (38.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">high</td>
+<td class="lastrow">341 (53.7%)</td>
+<td class="lastrow">653 (67.2%)</td>
+<td class="lastrow">994 (61.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Wants more children?</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">no</td>
+<td>635 (100%)</td>
+<td>0 (0%)</td>
+<td>635 (39.5%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">yes</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">972 (100%)</td>
+<td class="lastrow">972 (60.5%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Using contraceptives?</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">not using</td>
+<td>347 (54.6%)</td>
+<td>753 (77.5%)</td>
+<td>1100 (68.5%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">using</td>
+<td class="lastrow">288 (45.4%)</td>
+<td class="lastrow">219 (22.5%)</td>
+<td class="lastrow">507 (31.5%)</td>
+</tr>
+</tbody>
+</table></div>
 </div>
 <div id="create-a-barplot" class="section level1">
 <h1 class="hasAnchor">
 <a href="#create-a-barplot" class="anchor"></a>Create a barplot</h1>
 <p>See the <a href="https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf">Data Visualization Cheatsheet</a> for help on enhancing this barplot.</p>
 <p>Now, make a sort of fancy greyscale barplot using ggplot2. You can make a nice plot without using nearly so many options, but I want to demonstrate the flexibility of making a bar plot with ggplot2.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit">
+<div class="sourceCode" id="cb24"><pre class="downlit">
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">cusebyage</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">wantsMore</span>, weight <span class="op">=</span> <span class="va">n</span>, fill <span class="op">=</span> <span class="va">contraceptive</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="co"># create a stacked bar plot, where the values provided are counts/frequencies,</span>
   <span class="co"># and use black outlines for the bars.</span>
@@ -271,7 +458,7 @@
   <span class="co"># just want to specify the colors manually here.</span>
   <span class="fu">scale_fill_manual</span><span class="op">(</span>values<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"grey"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></pre></div>
-<p><img src="session_lab_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p><img src="session_lab_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p><strong>Figure 1: contraceptive use in the study sample.</strong> Bar plot is organized by age group and stacked by self-report of whether participant wants more children. The fraction of women wanting more children decreases with age, becoming a minority in the 40-49 age group. One unexpected observation in this bar chart is that in the &lt;25 age group, those reporting wanting more children appear <em>more</em> likely to report using contraceptives. Is this the case? One way to make this more visually clear would be to use percentages, instead of counts, on the vertical scale. Try this, by changing <code>weight = n</code> to <code>weight = percent</code> to use the “percent” column as heights instead of the “n” column. While you’re at it, change the y label to reflect this change.</p>
 <p><em>Note</em>: The caption option in <em>ggplot2</em> is suitable for smaller, embedded captions. But for publication the caption usually needs to be in separated text.</p>
 </div>
@@ -279,30 +466,25 @@
 <h1 class="hasAnchor">
 <a href="#try-yourself-plot-percentages-instead-of-counts" class="anchor"></a>Try yourself: plot percentages instead of counts</h1>
 <p>Here’s some code to calculate the percentages.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit">
+<div class="sourceCode" id="cb25"><pre class="downlit">
 <span class="va">cusebyage</span> <span class="op">&lt;-</span> <span class="fu">group_by</span><span class="op">(</span><span class="va">cusebyage</span>, <span class="va">age</span>, <span class="va">wantsMore</span><span class="op">)</span> <span class="op">%&gt;%</span> 
     <span class="fu">mutate</span><span class="op">(</span>percent <span class="op">=</span> <span class="va">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span>
 <span class="va">cusebyage</span></pre></div>
-<pre><code>## # A tibble: 16 x 5
+<pre><code>## # A tibble: 32 x 6
 ## # Groups:   age, wantsMore [8]
-##    age   wantsMore contraceptive     n percent
-##    &lt;fct&gt; &lt;fct&gt;     &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;
-##  1 &lt;25   no        using            14    18.9
-##  2 &lt;25   no        not using        60    81.1
-##  3 &lt;25   yes       using            58    18.0
-##  4 &lt;25   yes       not using       265    82.0
-##  5 25-29 no        using            37    30.6
-##  6 25-29 no        not using        84    69.4
-##  7 25-29 yes       using            68    24.0
-##  8 25-29 yes       not using       215    76.0
-##  9 30-39 no        using           158    52.1
-## 10 30-39 no        not using       145    47.9
-## 11 30-39 yes       using            79    25.6
-## 12 30-39 yes       not using       230    74.4
-## 13 40-49 no        using            79    57.7
-## 14 40-49 no        not using        58    42.3
-## 15 40-49 yes       using            14    24.6
-## 16 40-49 yes       not using        43    75.4</code></pre>
+##    age   education wantsMore contraceptive     n percent
+##    &lt;fct&gt; &lt;fct&gt;     &lt;fct&gt;     &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;
+##  1 &lt;25   low       no        using             4    5.41
+##  2 &lt;25   low       no        not using        10   13.5 
+##  3 &lt;25   low       yes       using             6    1.86
+##  4 &lt;25   low       yes       not using        53   16.4 
+##  5 &lt;25   high      no        using            10   13.5 
+##  6 &lt;25   high      no        not using        50   67.6 
+##  7 &lt;25   high      yes       using            52   16.1 
+##  8 &lt;25   high      yes       not using       212   65.6 
+##  9 25-29 low       no        using            10    8.26
+## 10 25-29 low       no        not using        19   15.7 
+## # … with 22 more rows</code></pre>
 <p>Now, can you repeat the barplot, but showing percentages instead of counts?</p>
 </div>
   </div>
