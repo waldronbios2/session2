@@ -14,7 +14,7 @@ output:
 
 1. Define "tidy" data
 2. Load a dataset in R and perform basic exploratory data analysis
-3. Create descriptive "Table 1" of a study sample using the `tableone` package
+3. Create descriptive "Table 1" of a study sample using the `table1` package
 4. Create a customized bar plot using the `ggplot2` package
 
 
@@ -55,17 +55,20 @@ summary(cuse)
 
 Here's a simple way to create the summary table that is required for your assignments,
 and for any epidemiological analysis you do. The text format is fine, and convenient
-for moving into another pubication or presentation document. See the [tableone vignette](https://cran.r-project.org/web/packages/tableone/vignettes/introduction.html) 
-for more complex usage and for instructions on how to export directly to an Excel
-or Word table.
+for moving into another pubication or presentation document. See the [table1 vignette](https://cran.r-project.org/web/packages/table1/vignettes/table1-examples.html) 
+for more examples. 
 
+WARNING: the counts in this table are incorrect, because each row corresponds to 
+a number of counts of women using and not using contraceptives. We do this just 
+to demo the table1 package, then make a correct table below after reshaping
+this dataset.
 
 ```{r}
-# Note the use of `tableone::` to specify that `CreateTableOne` comes from the 
-# tableone library without actually loading the library.
-tableone::CreateTableOne(data = cuse)
+library(table1)
+table1(~ ., data = cuse)
 ```
-**Table 1: characteristics of the contraceptive use dataset**
+**Table 1: characteristics of the contraceptive use dataset. Note, these counts
+correspond to number of rows in the dataset, _not_ numbers of participants**
 
 # Definition of tidy data
 
@@ -91,9 +94,9 @@ sum the number wanting or not wanting more children in each of these groups. Als
 rename "notUsing" to "not using" to make a nicer legend later.
 ```{r}
 library(tidyverse)
-cusebyage <- group_by(cuse, age, wantsMore) %>%
+cusebyage0 <- group_by(cuse, age, education, wantsMore) %>%
     summarise(using = sum(using), "not using" = sum(notUsing))
-print(cusebyage)
+print(cusebyage0)
 ```
 
 Next, pivot this into a longer table by putting the "using" and "not using" columns
@@ -101,11 +104,29 @@ into a single column called "contraceptive". This pivot is necessary to make the
 
 
 ```{r}
-cusebyage <- pivot_longer(cusebyage,
+cusebyage <- pivot_longer(cusebyage0,
       cols = using:"not using",
       values_to = "n",
       names_to = "contraceptive")
 cusebyage
+```
+# A correct table 1
+
+We can finally make a correct table1 with *one* more transformation, uncounting 
+on the `n` column (using the tidyr package again). Also, we use `label` from
+the `table1` package to make more informative and readable labels. For interest,
+this time we stratify based on wanting more children, and add a caption. See
+`?table` for more options.
+
+```{r}
+cuseverylong <- uncount(cusebyage, n) #from the tidyr package
+label(cuseverylong$age) <- "Age (years)"
+label(cuseverylong$education) <- "Education level"
+label(cuseverylong$wantsMore) <- "Wants more children?"
+label(cuseverylong$contraceptive) <- "Using contraceptives?"
+table1(~ . | wantsMore, rowlabelhead = "Wants more children?", 
+       caption = "Table 1: Participants in the contraceptive use study",
+       data = cuseverylong)
 ```
 
 # Create a barplot

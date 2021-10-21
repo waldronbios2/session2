@@ -147,19 +147,12 @@ cuse <-
 \tiny
 
 ```{r, echo=FALSE}
-tableone::CreateTableOne(
-  data = cuse,
-  vars = c("education", "wantsMore", "percentusing"),
-  strata = "age",
-  addOverall = TRUE,
-  test = FALSE
-)
+suppressPackageStartupMessages(library(table1))
+table1(~education + wantsMore + percentusing | age, rowlabelhead = "Age (years)", 
+       data = cuse)
 ```
 
 Source: http://data.princeton.edu/wws509/datasets/#cuse
-See [tableone](https://cran.r-project.org/web/packages/tableone/vignettes/introduction.html) vignette for e.g. how to export to Word / Excel
-
-https://cran.r-project.org/web/packages/tableone/vignettes/introduction.html
 
 ## Perform regression
 
