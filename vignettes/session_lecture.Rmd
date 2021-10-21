@@ -146,13 +146,17 @@ cuse <-
 
 \tiny
 
-```{r, echo=FALSE}
-suppressPackageStartupMessages(library(table1))
-table1(~education + wantsMore + percentusing | age, rowlabelhead = "Age (years)", 
-       data = cuse)
+```{r, echo=FALSE, message=FALSE}
+suppressPackageStartupMessages({
+  library(table1)
+})
+table1( ~ education + wantsMore + percentusing |
+          age,
+        rowlabelhead = "Age (years)",
+        data = cuse)
 ```
 
-Source: http://data.princeton.edu/wws509/datasets/#cuse
+Source: http://data.princeton.edu/wws509/datasets/#cuse. Note, this table represents rows of the source data, not number of participants. See the lab to make a table that summarizes the participants.
 
 ## Perform regression
 
