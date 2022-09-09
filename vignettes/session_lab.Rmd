@@ -110,6 +110,7 @@ cusebyage <- pivot_longer(cusebyage0,
       names_to = "contraceptive")
 cusebyage
 ```
+
 # A correct table 1
 
 We can finally make a correct table1 with *one* more transformation, uncounting 
@@ -129,9 +130,17 @@ table1(~ . | wantsMore, rowlabelhead = "Wants more children?",
        data = cuseverylong)
 ```
 
+Note, there are at least several other packages for making the epi "Table 1". Take 
+a look to see if any of them appeal to you:
+* [desctable](https://cran.r-project.org/web/packages/desctable/vignettes/desctable.html): powerful, provides a "download Excel" button in html output. 
+* [kableExtra](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html): very powerful and flexible for formatting and features. Requires a little more 
+code to get to your table 1.
+* [tableone](https://cran.r-project.org/web/packages/tableone/vignettes/introduction.html): simple and text-based, but works quite well and has options for exporting to Excel for 
+use in a manuscript.
+
 # Create a barplot
 
-See the [Data Visualization Cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf) for help on enhancing this barplot.
+See the [Data Visualization with ggplot2 Cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf) for help on enhancing this barplot.
 
 Now, make a sort of fancy greyscale barplot using ggplot2. You can make a nice
 plot without using nearly so many options, but I want to demonstrate the flexibility
