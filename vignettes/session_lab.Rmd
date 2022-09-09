@@ -40,7 +40,10 @@ Unlike in the lecture, here I demonstrate reading the dataset using the *readr* 
 # Using readr package with "File - Import Dataset" and manually setting factor levels.
 # Note, you don't have to write all this code by hand! It was produced by the File - Import Dataset helper.
 library(readr)
-cuse <- read_table2("cuse.dat",
+library(readr)
+cuse <-
+  read_table(
+    "cuse.dat",
     col_types = cols(
       age = col_factor(levels = c("<25", "25-29", "30-39", "40-49")),
       education = col_factor(levels = c("low", "high")),
@@ -48,8 +51,18 @@ cuse <- read_table2("cuse.dat",
       X6 = col_skip()
     )
   )
+```
+Note, these warnings relate to the presence of an empty column in the dataset, 
+which I dropped using `X6 = col_skip()`
+
+```{r}
+problems()
+```
+
+```{r}
 summary(cuse)
 ```
+
 
 # Create an epi "Table 1"
 
@@ -63,7 +76,7 @@ a number of counts of women using and not using contraceptives. We do this just
 to demo the table1 package, then make a correct table below after reshaping
 this dataset.
 
-```{r}
+```{r, message = FALSE}
 library(table1)
 table1(~ ., data = cuse)
 ```
@@ -92,7 +105,8 @@ steps all together using the pipe operator (`%>%`).
 First, group by age and whether the participant reports wanting more children, and 
 sum the number wanting or not wanting more children in each of these groups. Also
 rename "notUsing" to "not using" to make a nicer legend later.
-```{r}
+
+```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
 cusebyage0 <- group_by(cuse, age, education, wantsMore) %>%
     summarise(using = sum(using), "not using" = sum(notUsing))
