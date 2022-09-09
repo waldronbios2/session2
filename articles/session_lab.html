@@ -273,7 +273,7 @@
 ## ✔ tibble  3.0.3     ✔ stringr 1.4.0
 ## ✔ tidyr   1.1.2     ✔ forcats 0.5.0
 ## ✔ purrr   0.3.4</code></pre>
-<pre><code>## Warning: package 'purrr' was built under R version 4.0.3</code></pre>
+<pre><code>## Warning: package 'purrr' was built under R version 4.0.5</code></pre>
 <pre><code>## Warning: package 'stringr' was built under R version 4.0.3</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
@@ -436,11 +436,12 @@
 </tr>
 </tbody>
 </table></div>
+<p>Note, there are at least several other packages for making the epi “Table 1”. Take a look to see if any of them appeal to you: * <a href="https://cran.r-project.org/web/packages/desctable/vignettes/desctable.html">desctable</a>: powerful, provides a “download Excel” button in html output. * <a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html">kableExtra</a>: very powerful and flexible for formatting and features. Requires a little more code to get to your table 1. * <a href="https://cran.r-project.org/web/packages/tableone/vignettes/introduction.html">tableone</a>: simple and text-based, but works quite well and has options for exporting to Excel for use in a manuscript.</p>
 </div>
 <div id="create-a-barplot" class="section level1">
 <h1 class="hasAnchor">
 <a href="#create-a-barplot" class="anchor"></a>Create a barplot</h1>
-<p>See the <a href="https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf">Data Visualization Cheatsheet</a> for help on enhancing this barplot.</p>
+<p>See the <a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf">Data Visualization with ggplot2 Cheatsheet</a> for help on enhancing this barplot.</p>
 <p>Now, make a sort of fancy greyscale barplot using ggplot2. You can make a nice plot without using nearly so many options, but I want to demonstrate the flexibility of making a bar plot with ggplot2.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit">
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">cusebyage</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">wantsMore</span>, weight <span class="op">=</span> <span class="va">n</span>, fill <span class="op">=</span> <span class="va">contraceptive</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
