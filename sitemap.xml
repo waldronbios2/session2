@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://waldronbios2.github.io/templatesession//index.html</loc>
+    <loc>https://waldronbios2.github.io/templatesession/404.html</loc>
   </url>
   <url>
-    <loc>https://waldronbios2.github.io/templatesession//articles/session_lab.html</loc>
+    <loc>https://waldronbios2.github.io/templatesession/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://waldronbios2.github.io/templatesession//articles/session_lecture.html</loc>
+    <loc>https://waldronbios2.github.io/templatesession/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://waldronbios2.github.io/templatesession/articles/session_lab.html</loc>
+  </url>
+  <url>
+    <loc>https://waldronbios2.github.io/templatesession/articles/session_lecture.html</loc>
+  </url>
+  <url>
+    <loc>https://waldronbios2.github.io/templatesession/authors.html</loc>
+  </url>
+  <url>
+    <loc>https://waldronbios2.github.io/templatesession/index.html</loc>
+  </url>
+  <url>
+    <loc>https://waldronbios2.github.io/templatesession/reference/index.html</loc>
   </url>
 </urlset>

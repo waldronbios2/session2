@@ -25,6 +25,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,14 +39,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">session2</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Lecture and Lab
      
     <span class="caret"></span>
@@ -57,23 +59,23 @@
       <a href="../articles/session_lecture.pdf">Lecture notes PDF</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../articles/session_lab.html">Lab materials</a>
     </li>
   </ul>
 </li>
-<li class="dropdown-header">
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/waldronbios2/session2/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/waldronbios2/session2/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://twitter.com/leviwaldron1">
-    <span class="fab fa fab fa-twitter fa-lg"></span>
+  <a href="https://twitter.com/leviwaldron1" class="external-link">
+    <span class="fab fa-twitter fa-lg"></span>
      
   </a>
 </li>
@@ -87,27 +89,29 @@
 
       
 
-      </header><script src="session_lecture_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="session_lecture_files/table1-1.0/table1_defaults.css" rel="stylesheet">
+      </header><link href="session_lecture_files/table1-1.0/table1_defaults.css" rel="stylesheet">
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Session 2: Linear and logistic regression as Generalized Linear Models</h1>
-                        <h4 class="author">Levi Waldron</h4>
+      <h1 data-toc-skip>Session 2: Linear and logistic regression as
+Generalized Linear Models</h1>
+                        <h4 data-toc-skip class="author">Levi
+Waldron</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/waldronbios2/session2/blob/master/vignettes/session_lecture.Rmd"><code>vignettes/session_lecture.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/waldronbios2/session2/blob/HEAD/vignettes/session_lecture.Rmd" class="external-link"><code>vignettes/session_lecture.Rmd</code></a></small>
       <div class="hidden name"><code>session_lecture.Rmd</code></div>
 
     </div>
 
     
     
-<div id="learning-objectives-and-outline" class="section level1">
-<h1 class="hasAnchor">
-<a href="#learning-objectives-and-outline" class="anchor"></a>Learning Objectives and Outline</h1>
-<div id="learning-objectives" class="section level2">
-<h2 class="hasAnchor">
-<a href="#learning-objectives" class="anchor"></a>Learning objectives</h2>
+<div class="section level2">
+<h2 id="learning-objectives-and-outline">Learning Objectives and Outline<a class="anchor" aria-label="anchor" href="#learning-objectives-and-outline"></a>
+</h2>
+<div class="section level3">
+<h3 id="learning-objectives">Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives"></a>
+</h3>
 <ol style="list-style-type: decimal">
 <li>define generalized linear models (GLM)</li>
 <li>define linear and logistic regression as special cases of GLMs</li>
@@ -116,44 +120,51 @@
 <li>describe application of the Wald test</li>
 </ol>
 </div>
-<div id="outline" class="section level2">
-<h2 class="hasAnchor">
-<a href="#outline" class="anchor"></a>Outline</h2>
+<div class="section level3">
+<h3 id="outline">Outline<a class="anchor" aria-label="anchor" href="#outline"></a>
+</h3>
 <ol style="list-style-type: decimal">
 <li>Brief overview of multiple regression (Vittinghoff 4.1-4.3)</li>
 <li>Linear Regression as a GLM (Vittinghoff 4.1-4.3)</li>
 <li>Logistic Regression as a GLM (Vittinghoff 5.1-5.3)</li>
-<li>Statistical inference for logistic regression (Vittinghoff 5.1-5.3)</li>
+<li>Statistical inference for logistic regression (Vittinghoff
+5.1-5.3)</li>
 </ol>
 </div>
 </div>
-<div id="review-of-multiple-linear-regression" class="section level1">
-<h1 class="hasAnchor">
-<a href="#review-of-multiple-linear-regression" class="anchor"></a>Review of multiple linear regression</h1>
-<div id="systematic-component" class="section level2">
-<h2 class="hasAnchor">
-<a href="#systematic-component" class="anchor"></a>Systematic component</h2>
+<div class="section level2">
+<h2 id="review-of-multiple-linear-regression">Review of multiple linear regression<a class="anchor" aria-label="anchor" href="#review-of-multiple-linear-regression"></a>
+</h2>
+<div class="section level3">
+<h3 id="systematic-component">Systematic component<a class="anchor" aria-label="anchor" href="#systematic-component"></a>
+</h3>
 <p><span class="math display">\[
 E[y|x] = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_p x_p
 \]</span></p>
 <ul>
 <li>
-<span class="math inline">\(x_p\)</span> are the predictors or independent variables</li>
+<span class="math inline">\(x_p\)</span> are the predictors or
+independent variables</li>
 <li>
-<span class="math inline">\(y\)</span> is the outcome, response, or dependent variable</li>
+<span class="math inline">\(y\)</span> is the outcome, response, or
+dependent variable</li>
 <li>
-<span class="math inline">\(E[y|x]\)</span> is the expected value of <span class="math inline">\(y\)</span> given <span class="math inline">\(x\)</span>
+<span class="math inline">\(E[y|x]\)</span> is the expected value of
+<span class="math inline">\(y\)</span> given <span class="math inline">\(x\)</span>
 </li>
 <li>
-<span class="math inline">\(\beta_p\)</span> are the regression coefficients</li>
+<span class="math inline">\(\beta_p\)</span> are the regression
+coefficients</li>
 </ul>
 </div>
-<div id="systematic-plus-random-component" class="section level2">
-<h2 class="hasAnchor">
-<a href="#systematic-plus-random-component" class="anchor"></a>Systematic plus random component</h2>
+<div class="section level3">
+<h3 id="systematic-plus-random-component">Systematic plus random component<a class="anchor" aria-label="anchor" href="#systematic-plus-random-component"></a>
+</h3>
 <p><span class="math inline">\(y_i = E[y|x] + \epsilon_i\)</span></p>
-<p><span class="math inline">\(y_i = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_p x_p + \epsilon_i\)</span></p>
-<p>Assumption: <span class="math inline">\(\epsilon_i \stackrel{iid}{\sim} N(0, \sigma_\epsilon^2)\)</span></p>
+<p><span class="math inline">\(y_i = \beta_0 + \beta_1 x_1 + \beta_2 x_2
++ ... + \beta_p x_p + \epsilon_i\)</span></p>
+<p>Assumption: <span class="math inline">\(\epsilon_i
+\stackrel{iid}{\sim} N(0, \sigma_\epsilon^2)\)</span></p>
 <ul>
 <li>Normal distribution</li>
 <li>Mean zero at every value of predictors</li>
@@ -162,104 +173,122 @@ E[y|x] = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_p x_p
 </ul>
 </div>
 </div>
-<div id="linear-regression-as-a-glm" class="section level1">
-<h1 class="hasAnchor">
-<a href="#linear-regression-as-a-glm" class="anchor"></a>Linear Regression as a GLM</h1>
-<div id="generalized-linear-models-glm" class="section level2">
-<h2 class="hasAnchor">
-<a href="#generalized-linear-models-glm" class="anchor"></a>Generalized Linear Models (GLM)</h2>
+<div class="section level2">
+<h2 id="linear-regression-as-a-glm">Linear Regression as a GLM<a class="anchor" aria-label="anchor" href="#linear-regression-as-a-glm"></a>
+</h2>
+<div class="section level3">
+<h3 id="generalized-linear-models-glm">Generalized Linear Models (GLM)<a class="anchor" aria-label="anchor" href="#generalized-linear-models-glm"></a>
+</h3>
 <ul>
-<li>Linear regression is a special case of a broad family of models called “Generalized Linear Models” (GLM)</li>
-<li>This unifying approach allows to fit a large set of models using maximum likelihood estimation methods (MLE) (Nelder &amp; Wedderburn, 1972)</li>
-<li>Can model many types of data directly using appropriate distributions, e.g. Poisson distribution for count data</li>
-<li>Transformations of <span class="math inline">\(Y\)</span> not needed</li>
+<li>Linear regression is a special case of a broad family of models
+called “Generalized Linear Models” (GLM)</li>
+<li>This unifying approach allows to fit a large set of models using
+maximum likelihood estimation methods (MLE) (Nelder &amp; Wedderburn,
+1972)</li>
+<li>Can model many types of data directly using appropriate
+distributions, e.g. Poisson distribution for count data</li>
+<li>Transformations of <span class="math inline">\(Y\)</span> not
+needed</li>
 </ul>
 </div>
-<div id="components-of-glm" class="section level2">
-<h2 class="hasAnchor">
-<a href="#components-of-glm" class="anchor"></a>Components of GLM</h2>
+<div class="section level3">
+<h3 id="components-of-glm">Components of GLM<a class="anchor" aria-label="anchor" href="#components-of-glm"></a>
+</h3>
 <ul>
 <li>
-<strong>Random component</strong> specifies the conditional distribution for the response variable
+<strong>Random component</strong> specifies the conditional
+distribution for the response variable
 <ul>
 <li>doesn’t have to be normal</li>
-<li>can be any distribution in the “exponential” family of distributions</li>
+<li>can be any distribution in the “exponential” family of
+distributions</li>
 </ul>
 </li>
 <li>
-<strong>Systematic component</strong> specifies linear function of predictors (linear predictor)</li>
+<strong>Systematic component</strong> specifies linear function of
+predictors (linear predictor)</li>
 <li>
-<strong>Link</strong> [denoted by g(.)] specifies the relationship between the expected value of the random component and the systematic component
+<strong>Link</strong> [denoted by g(.)] specifies the relationship
+between the expected value of the random component and the systematic
+component
 <ul>
 <li>can be linear or nonlinear</li>
 </ul>
 </li>
 </ul>
 </div>
-<div id="linear-regression-as-glm" class="section level2">
-<h2 class="hasAnchor">
-<a href="#linear-regression-as-glm" class="anchor"></a>Linear Regression as GLM</h2>
+<div class="section level3">
+<h3 id="linear-regression-as-glm">Linear Regression as GLM<a class="anchor" aria-label="anchor" href="#linear-regression-as-glm"></a>
+</h3>
 <ul>
-<li><p><strong>The model</strong>: <span class="math inline">\(y_i = E[y|x] + \epsilon_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_p x_{pi} + \epsilon_i\)</span></p></li>
-<li><p><strong>Random component</strong> of <span class="math inline">\(y_i\)</span> is normally distributed: <span class="math inline">\(\epsilon_i \stackrel{iid}{\sim} N(0, \sigma_\epsilon^2)\)</span></p></li>
-<li><p><strong>Systematic component</strong> (linear predictor): <span class="math inline">\(\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_p x_{pi}\)</span></p></li>
-<li><p><strong>Link function</strong> here is the <em>identity link</em>: <span class="math inline">\(g(E(y | x)) = E(y | x)\)</span>. We are modeling the mean directly, no transformation.</p></li>
+<li><p><strong>The model</strong>: <span class="math inline">\(y_i =
+E[y|x] + \epsilon_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... +
+\beta_p x_{pi} + \epsilon_i\)</span></p></li>
+<li><p><strong>Random component</strong> of <span class="math inline">\(y_i\)</span> is normally distributed: <span class="math inline">\(\epsilon_i \stackrel{iid}{\sim} N(0,
+\sigma_\epsilon^2)\)</span></p></li>
+<li><p><strong>Systematic component</strong> (linear predictor): <span class="math inline">\(\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... +
+\beta_p x_{pi}\)</span></p></li>
+<li><p><strong>Link function</strong> here is the <em>identity
+link</em>: <span class="math inline">\(g(E(y | x)) = E(y | x)\)</span>.
+We are modeling the mean directly, no transformation.</p></li>
 </ul>
 </div>
 </div>
-<div id="logistic-regression-as-a-glm" class="section level1">
-<h1 class="hasAnchor">
-<a href="#logistic-regression-as-a-glm" class="anchor"></a>Logistic Regression as a GLM</h1>
-<div id="the-logistic-regression-model" class="section level2">
-<h2 class="hasAnchor">
-<a href="#the-logistic-regression-model" class="anchor"></a>The logistic regression model</h2>
+<div class="section level2">
+<h2 id="logistic-regression-as-a-glm">Logistic Regression as a GLM<a class="anchor" aria-label="anchor" href="#logistic-regression-as-a-glm"></a>
+</h2>
+<div class="section level3">
+<h3 id="the-logistic-regression-model">The logistic regression model<a class="anchor" aria-label="anchor" href="#the-logistic-regression-model"></a>
+</h3>
 <ul>
 <li>
-<strong>The model</strong>:  <span class="math display">\[
-Logit(P(x)) = log \left( \frac{P(x)}{1-P(x)} \right) = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_p x_{pi}
+<strong>The model</strong>: <span class="math display">\[
+Logit(P(x)) = log \left( \frac{P(x)}{1-P(x)} \right) = \beta_0 + \beta_1
+x_{1i} + \beta_2 x_{2i} + ... + \beta_p x_{pi}
 \]</span>
 </li>
 </ul>
 <ul>
-<li><p><strong>Random component</strong>: <span class="math inline">\(y_i\)</span> follows a Binomial distribution (outcome is a binary variable)</p></li>
+<li><p><strong>Random component</strong>: <span class="math inline">\(y_i\)</span> follows a Binomial distribution
+(outcome is a binary variable)</p></li>
 <li><p><strong>Systematic component</strong>: linear predictor <span class="math display">\[
 \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_p x_{pi}
 \]</span></p></li>
-<li><p><strong>Link function</strong>: <em>logit</em> (log of the odds that the event occurs)</p></li>
+<li><p><strong>Link function</strong>: <em>logit</em> (log of the odds
+that the event occurs)</p></li>
 </ul>
 <p><span class="math display">\[
 g(P(x)) = logit(P(x)) = log\left( \frac{P(x)}{1-P(x)} \right)
 \]</span></p>
 <p><span class="math display">\[
-P(x) = g^{-1}\left( \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_p x_{pi}
- \right)
+P(x) = g^{-1}\left( \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... +
+\beta_p x_{pi}
+\right)
 \]</span></p>
 </div>
-<div id="the-logit-function" class="section level2">
-<h2 class="hasAnchor">
-<a href="#the-logit-function" class="anchor"></a>The logit function</h2>
-
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="va">logit</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">P</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">P</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">P</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">logit</span>, xlab<span class="op">=</span><span class="st">"Probability"</span>, ylab<span class="op">=</span><span class="st">"Log-odds"</span>,
-     cex.lab<span class="op">=</span><span class="fl">1.5</span>, cex.axis<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span></pre></div>
+<div class="section level3">
+<h3 id="the-logit-function">The logit function<a class="anchor" aria-label="anchor" href="#the-logit-function"></a>
+</h3>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">logit</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">P</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">P</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">P</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">logit</span>, xlab<span class="op">=</span><span class="st">"Probability"</span>, ylab<span class="op">=</span><span class="st">"Log-odds"</span>,</span>
+<span>     cex.lab<span class="op">=</span><span class="fl">1.5</span>, cex.axis<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span></span></code></pre></div>
 <p><img src="session_lecture_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
 </div>
-<div id="inverse-logit-function" class="section level2">
-<h2 class="hasAnchor">
-<a href="#inverse-logit-function" class="anchor"></a>Inverse logit function</h2>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va">invLogit</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">1</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="section level3">
+<h3 id="inverse-logit-function">Inverse logit function<a class="anchor" aria-label="anchor" href="#inverse-logit-function"></a>
+</h3>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">invLogit</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">1</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="session_lecture_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
-<div id="example-contraceptive-use-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-contraceptive-use-data" class="anchor"></a>Example: contraceptive use data</h2>
-
+<div class="section level3">
+<h3 id="example-contraceptive-use-data">Example: contraceptive use data<a class="anchor" aria-label="anchor" href="#example-contraceptive-use-data"></a>
+</h3>
 <div class="Rtable1"><table class="table Rtable1">
 <thead><tr>
 <th class="rowlabel firstrow lastrow">Age (years)</th>
-<th class="firstrow lastrow"><span class="stratlabel">&lt;25<br><span class="stratn">(N=4)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel"><span class="stratn">(N=4)</span></span></th>
 <th class="firstrow lastrow"><span class="stratlabel">25-29<br><span class="stratn">(N=4)</span></span></th>
 <th class="firstrow lastrow"><span class="stratlabel">30-39<br><span class="stratn">(N=4)</span></span></th>
 <th class="firstrow lastrow"><span class="stratlabel">40-49<br><span class="stratn">(N=4)</span></span></th>
@@ -267,7 +296,7 @@ P(x) = g^{-1}\left( \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_p x_
 </tr></thead>
 <tbody>
 <tr>
-<td class="rowlabel firstrow"><span class="varlabel">education</span></td>
+<td class="rowlabel firstrow">education</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -291,7 +320,7 @@ P(x) = g^{-1}\left( \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_p x_
 <td class="lastrow">8 (50.0%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow"><span class="varlabel">wantsMore</span></td>
+<td class="rowlabel firstrow">wantsMore</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -315,7 +344,7 @@ P(x) = g^{-1}\left( \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_p x_
 <td class="lastrow">8 (50.0%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow"><span class="varlabel">percentusing</span></td>
+<td class="rowlabel firstrow">percentusing</td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -340,85 +369,95 @@ P(x) = g^{-1}\left( \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_p x_
 </tr>
 </tbody>
 </table></div>
-<p>Source: <a href="http://data.princeton.edu/wws509/datasets/#cuse" class="uri">http://data.princeton.edu/wws509/datasets/#cuse</a>. Note, this table represents rows of the source data, not number of participants. See the lab to make a table that summarizes the participants.</p>
+<p>Source: <a href="http://data.princeton.edu/wws509/datasets/#cuse" class="external-link uri">http://data.princeton.edu/wws509/datasets/#cuse</a>. Note,
+this table represents rows of the source data, not number of
+participants. See the lab to make a table that summarizes the
+participants.</p>
 </div>
-<div id="perform-regression" class="section level2">
-<h2 class="hasAnchor">
-<a href="#perform-regression" class="anchor"></a>Perform regression</h2>
+<div class="section level3">
+<h3 id="perform-regression">Perform regression<a class="anchor" aria-label="anchor" href="#perform-regression"></a>
+</h3>
 <ul>
 <li>Outcome: whether using contraceptives or not</li>
-<li>Predictors: age, education level (high/low), whether wants more children or not</li>
+<li>Predictors: age, education level (high/low), whether wants more
+children or not</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">using</span>, <span class="va">notUsing</span><span class="op">)</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">education</span> <span class="op">+</span> <span class="va">wantsMore</span>, 
-           data<span class="op">=</span><span class="va">cuse</span>, family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span><span class="op">(</span><span class="st">"logit"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fit1</span><span class="op">)</span></pre></div>
-<pre><code>## 
-## Call:
-## glm(formula = cbind(using, notUsing) ~ age + education + wantsMore, 
-##     family = binomial("logit"), data = cuse)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -2.5148  -0.9376   0.2408   0.9822   1.7333  
-## 
-## Coefficients:
-##              Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)   -0.8082     0.1590  -5.083 3.71e-07 ***
-## age25-29       0.3894     0.1759   2.214  0.02681 *  
-## age30-39       0.9086     0.1646   5.519 3.40e-08 ***
-## age40-49       1.1892     0.2144   5.546 2.92e-08 ***
-## educationlow  -0.3250     0.1240  -2.620  0.00879 ** 
-## wantsMoreyes  -0.8330     0.1175  -7.091 1.33e-12 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## (Dispersion parameter for binomial family taken to be 1)
-## 
-##     Null deviance: 165.772  on 15  degrees of freedom
-## Residual deviance:  29.917  on 10  degrees of freedom
-## AIC: 113.43
-## 
-## Number of Fisher Scoring iterations: 4</code></pre>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">using</span>, <span class="va">notUsing</span><span class="op">)</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">education</span> <span class="op">+</span> <span class="va">wantsMore</span>, </span>
+<span>           data<span class="op">=</span><span class="va">cuse</span>, family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="st">"logit"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">## Call:</span></span>
+<span><span class="co">## glm(formula = cbind(using, notUsing) ~ age + education + wantsMore, </span></span>
+<span><span class="co">##     family = binomial("logit"), data = cuse)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Coefficients:</span></span>
+<span><span class="co">##              Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
+<span><span class="co">## (Intercept)   -0.8082     0.1590  -5.083 3.71e-07 ***</span></span>
+<span><span class="co">## age25-29       0.3894     0.1759   2.214  0.02681 *  </span></span>
+<span><span class="co">## age30-39       0.9086     0.1646   5.519 3.40e-08 ***</span></span>
+<span><span class="co">## age40-49       1.1892     0.2144   5.546 2.92e-08 ***</span></span>
+<span><span class="co">## educationlow  -0.3250     0.1240  -2.620  0.00879 ** </span></span>
+<span><span class="co">## wantsMoreyes  -0.8330     0.1175  -7.091 1.33e-12 ***</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## (Dispersion parameter for binomial family taken to be 1)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     Null deviance: 165.772  on 15  degrees of freedom</span></span>
+<span><span class="co">## Residual deviance:  29.917  on 10  degrees of freedom</span></span>
+<span><span class="co">## AIC: 113.43</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Number of Fisher Scoring iterations: 4</span></span></code></pre>
 </div>
 </div>
-<div id="residuals-for-logistic-regression" class="section level1">
-<h1 class="hasAnchor">
-<a href="#residuals-for-logistic-regression" class="anchor"></a>Residuals for logistic regression</h1>
-<div id="pearson-residuals-for-logistic-regression" class="section level2">
-<h2 class="hasAnchor">
-<a href="#pearson-residuals-for-logistic-regression" class="anchor"></a>Pearson residuals for logistic regression</h2>
+<div class="section level2">
+<h2 id="residuals-for-logistic-regression">Residuals for logistic regression<a class="anchor" aria-label="anchor" href="#residuals-for-logistic-regression"></a>
+</h2>
+<div class="section level3">
+<h3 id="pearson-residuals-for-logistic-regression">Pearson residuals for logistic regression<a class="anchor" aria-label="anchor" href="#pearson-residuals-for-logistic-regression"></a>
+</h3>
 <ul>
-<li>Traditional residuals <span class="math inline">\(y_i - E[y_i|x_i]\)</span> don’t make sense for binary <span class="math inline">\(y\)</span>.</li>
+<li>Traditional residuals <span class="math inline">\(y_i -
+E[y_i|x_i]\)</span> don’t make sense for binary <span class="math inline">\(y\)</span>.</li>
 <li>One alternative is <em>Pearson residuals</em>
 <ul>
-<li>take the difference between observed and fitted values (on probability scale 0-1), and divide by the standard deviation of the observed value.</li>
+<li>take the difference between observed and fitted values (on
+probability scale 0-1), and divide by the standard deviation of the
+observed value.</li>
 </ul>
 </li>
-<li>Let <span class="math inline">\(\hat y_i\)</span> be the best-fit predicted probability for each data point, i.e. <span class="math inline">\(g^{-1}(\beta_0 + \beta_1 x_{1i} + ...)\)</span>
+<li>Let <span class="math inline">\(\hat y_i\)</span> be the best-fit
+predicted probability for each data point, i.e. <span class="math inline">\(g^{-1}(\beta_0 + \beta_1 x_{1i} +
+...)\)</span>
 </li>
 <li>
-<span class="math inline">\(y_i\)</span> is the observed value, either 0 or 1.</li>
+<span class="math inline">\(y_i\)</span> is the observed value,
+either 0 or 1.</li>
 </ul>
 <p><span class="math display">\[
 r_i = \frac{y_i - \hat y_i}{ \sqrt{ Var(\hat y_i) }}
 \]</span></p>
-<p>Summing the squared Pearson residuals produces the <em>Pearson Chi-squared statistic</em>:</p>
+<p>Summing the squared Pearson residuals produces the <em>Pearson
+Chi-squared statistic</em>:</p>
 <p><span class="math display">\[
 \chi ^2 = \sum_i r_i^2
 \]</span></p>
 </div>
-<div id="deviance-residuals-for-logistic-regression" class="section level2">
-<h2 class="hasAnchor">
-<a href="#deviance-residuals-for-logistic-regression" class="anchor"></a>Deviance residuals for logistic regression</h2>
+<div class="section level3">
+<h3 id="deviance-residuals-for-logistic-regression">Deviance residuals for logistic regression<a class="anchor" aria-label="anchor" href="#deviance-residuals-for-logistic-regression"></a>
+</h3>
 <ul>
-<li>Deviance residuals and Pearson residuals converge for high degrees of freedom</li>
-<li>Deviance residuals indicate the contribution of each point to the model <em>likelihood</em>
+<li>Deviance residuals and Pearson residuals converge for high degrees
+of freedom</li>
+<li>Deviance residuals indicate the contribution of each point to the
+model <em>likelihood</em>
 </li>
 <li>Definition of deviance residuals:</li>
 </ul>
 <p><span class="math display">\[
-d_i = s_i \sqrt{ -2 ( y_i \log \hat y_i + (1-y_i) \log (1 - \hat y_i) ) }
+d_i = s_i \sqrt{ -2 ( y_i \log \hat y_i + (1-y_i) \log (1 - \hat y_i) )
+}
 \]</span></p>
 <p>Where <span class="math inline">\(s_i = 1\)</span> if <span class="math inline">\(y_i = 1\)</span> and <span class="math inline">\(s_i = -1\)</span> if <span class="math inline">\(y_i = 0\)</span>.</p>
 <ul>
@@ -427,75 +466,88 @@ d_i = s_i \sqrt{ -2 ( y_i \log \hat y_i + (1-y_i) \log (1 - \hat y_i) ) }
 </ul>
 </div>
 </div>
-<div id="likelihood-and-hypothesis-testing" class="section level1">
-<h1 class="hasAnchor">
-<a href="#likelihood-and-hypothesis-testing" class="anchor"></a>Likelihood and hypothesis testing</h1>
-<div id="what-is-likelihood" class="section level2">
-<h2 class="hasAnchor">
-<a href="#what-is-likelihood" class="anchor"></a>What is likelihood?</h2>
+<div class="section level2">
+<h2 id="likelihood-and-hypothesis-testing">Likelihood and hypothesis testing<a class="anchor" aria-label="anchor" href="#likelihood-and-hypothesis-testing"></a>
+</h2>
+<div class="section level3">
+<h3 id="what-is-likelihood">What is likelihood?<a class="anchor" aria-label="anchor" href="#what-is-likelihood"></a>
+</h3>
 <ul>
-<li>The <em>likelihood</em> of a model is the probability of the observed outcomes given the model, sometimes written as:
+<li>The <em>likelihood</em> of a model is the probability of the
+observed outcomes given the model, sometimes written as:
 <ul>
 <li>
-<span class="math inline">\(L(\theta | data) = P(data|\theta)\)</span>.</li>
+<span class="math inline">\(L(\theta | data) =
+P(data|\theta)\)</span>.</li>
 </ul>
 </li>
-<li>Deviance residuals and the difference in log-likelihood between two models are related by:</li>
+<li>Deviance residuals and the difference in log-likelihood between two
+models are related by:</li>
 </ul>
-<p><span class="math inline">\(\Delta (\textrm{D}) = -2 * \Delta (\textrm{log likelihood})\)</span></p>
+<p><span class="math inline">\(\Delta (\textrm{D}) = -2 * \Delta
+(\textrm{log likelihood})\)</span></p>
 </div>
-<div id="likelihood-ratio-test" class="section level2">
-<h2 class="hasAnchor">
-<a href="#likelihood-ratio-test" class="anchor"></a>Likelihood Ratio Test</h2>
+<div class="section level3">
+<h3 id="likelihood-ratio-test">Likelihood Ratio Test<a class="anchor" aria-label="anchor" href="#likelihood-ratio-test"></a>
+</h3>
 <ul>
-<li>Use to assess whether the reduction in deviance provided by a more complicated model indicates a better fit</li>
-<li>It is equivalent of the nested Analysis of Variance is a nested Analysis of Deviance</li>
-<li>The difference in deviance under <span class="math inline">\(H_0\)</span> is <em>chi-square distributed</em>, with df equal to the difference in df of the two models.</li>
+<li>Use to assess whether the reduction in deviance provided by a more
+complicated model indicates a better fit</li>
+<li>It is equivalent of the nested Analysis of Variance is a nested
+Analysis of Deviance</li>
+<li>The difference in deviance under <span class="math inline">\(H_0\)</span> is <em>chi-square distributed</em>,
+with df equal to the difference in df of the two models.</li>
 </ul>
 </div>
-<div id="likelihood-ratio-test-contd" class="section level2">
-<h2 class="hasAnchor">
-<a href="#likelihood-ratio-test-contd" class="anchor"></a>Likelihood Ratio Test (cont’d)</h2>
-
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="va">fit0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">using</span>, <span class="va">notUsing</span><span class="op">)</span> <span class="op">~</span> <span class="op">-</span><span class="fl">1</span>, data<span class="op">=</span><span class="va">cuse</span>, 
-            family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span><span class="op">(</span><span class="st">"logit"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">fit0</span>, <span class="va">fit1</span>, test<span class="op">=</span><span class="st">"LRT"</span><span class="op">)</span></pre></div>
-<pre><code>## Analysis of Deviance Table
-## 
-## Model 1: cbind(using, notUsing) ~ -1
-## Model 2: cbind(using, notUsing) ~ age + education + wantsMore
-##   Resid. Df Resid. Dev Df Deviance  Pr(&gt;Chi)    
-## 1        16     389.85                          
-## 2        10      29.92  6   359.94 &lt; 2.2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div class="section level3">
+<h3 id="likelihood-ratio-test-contd">Likelihood Ratio Test (cont’d)<a class="anchor" aria-label="anchor" href="#likelihood-ratio-test-contd"></a>
+</h3>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fit0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">using</span>, <span class="va">notUsing</span><span class="op">)</span> <span class="op">~</span> <span class="op">-</span><span class="fl">1</span>, data<span class="op">=</span><span class="va">cuse</span>, </span>
+<span>            family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="st">"logit"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">fit0</span>, <span class="va">fit1</span>, test<span class="op">=</span><span class="st">"LRT"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Analysis of Deviance Table</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Model 1: cbind(using, notUsing) ~ -1</span></span>
+<span><span class="co">## Model 2: cbind(using, notUsing) ~ age + education + wantsMore</span></span>
+<span><span class="co">##   Resid. Df Resid. Dev Df Deviance  Pr(&gt;Chi)    </span></span>
+<span><span class="co">## 1        16     389.85                          </span></span>
+<span><span class="co">## 2        10      29.92  6   359.94 &lt; 2.2e-16 ***</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre>
 </div>
-<div id="wald-test-for-individual-regression-coefficients" class="section level2">
-<h2 class="hasAnchor">
-<a href="#wald-test-for-individual-regression-coefficients" class="anchor"></a>Wald test for individual regression coefficients</h2>
+<div class="section level3">
+<h3 id="wald-test-for-individual-regression-coefficients">Wald test for individual regression coefficients<a class="anchor" aria-label="anchor" href="#wald-test-for-individual-regression-coefficients"></a>
+</h3>
 <ul>
 <li>Can use partial Wald test for a single coefficient:
 <ul>
-<li><span class="math inline">\(\frac{\hat{\beta}}{\sqrt{var(\hat{\beta)}}} \sim t_{n-1}\)</span></li>
+<li><span class="math inline">\(\frac{\hat{\beta}}{\sqrt{var(\hat{\beta)}}} \sim
+t_{n-1}\)</span></li>
 <li>
-<span class="math inline">\(\frac{\left ( \hat{\beta} - \beta_0 \right )^2 }{var(\hat{\beta)}} \sim \chi^2_{df=1}\)</span> (large sample)</li>
+<span class="math inline">\(\frac{\left ( \hat{\beta} - \beta_0
+\right )^2 }{var(\hat{\beta)}} \sim \chi^2_{df=1}\)</span> (large
+sample)</li>
 </ul>
 </li>
-<li>Wald CI for <span class="math inline">\(\beta\)</span>: <span class="math inline">\(\hat{\beta} \pm t_{1-\alpha/2, n-1} \sqrt{var(\hat{\beta})}\)</span>
+<li>Wald CI for <span class="math inline">\(\beta\)</span>: <span class="math inline">\(\hat{\beta} \pm t_{1-\alpha/2, n-1}
+\sqrt{var(\hat{\beta})}\)</span>
 </li>
-<li>Wald CI for odds-ratio: <span class="math inline">\(e^{\hat{\beta} \pm t_{1-\alpha/2, n-1} \sqrt{var(\hat{\beta})}}\)</span>
+<li>Wald CI for odds-ratio: <span class="math inline">\(e^{\hat{\beta}
+\pm t_{1-\alpha/2, n-1} \sqrt{var(\hat{\beta})}}\)</span>
 </li>
 </ul>
-<p><em>Note</em>: Wald test confidence intervals on coefficients can provide poor coverage in some cases, even with relatively large samples</p>
+<p><em>Note</em>: Wald test confidence intervals on coefficients can
+provide poor coverage in some cases, even with relatively large
+samples</p>
 </div>
 </div>
-<div id="additive-vs--multiplicative-models" class="section level1">
-<h1 class="hasAnchor">
-<a href="#additive-vs--multiplicative-models" class="anchor"></a>Additive vs. Multiplicative models</h1>
-<div id="additive-vs--multiplicative-models-1" class="section level2">
-<h2 class="hasAnchor">
-<a href="#additive-vs--multiplicative-models-1" class="anchor"></a>Additive vs. Multiplicative models</h2>
+<div class="section level2">
+<h2 id="additive-vs--multiplicative-models">Additive vs. Multiplicative models<a class="anchor" aria-label="anchor" href="#additive-vs--multiplicative-models"></a>
+</h2>
+<div class="section level3">
+<h3 id="additive-vs--multiplicative-models-1">Additive vs. Multiplicative models<a class="anchor" aria-label="anchor" href="#additive-vs--multiplicative-models-1"></a>
+</h3>
 <ul>
 <li>Linear regression is an <em>additive</em> model
 <ul>
@@ -509,7 +561,9 @@ d_i = s_i \sqrt{ -2 ( y_i \log \hat y_i + (1-y_i) \log (1 - \hat y_i) ) }
 <ul>
 <li>If <span class="math inline">\(x_1=1\)</span> and <span class="math inline">\(x_2=1\)</span>, this adds 3.0 to <span class="math inline">\(log(\frac{P}{1-P})\)</span>
 </li>
-<li>Odds-ratio <span class="math inline">\(\frac{P}{1-P}\)</span> increases 20-fold: <span class="math inline">\(exp(1.5+1.5)\)</span> or <span class="math inline">\(exp(1.5) * exp(1.5)\)</span>
+<li>Odds-ratio <span class="math inline">\(\frac{P}{1-P}\)</span>
+increases 20-fold: <span class="math inline">\(exp(1.5+1.5)\)</span> or
+<span class="math inline">\(exp(1.5) * exp(1.5)\)</span>
 </li>
 </ul>
 </li>
@@ -529,11 +583,13 @@ d_i = s_i \sqrt{ -2 ( y_i \log \hat y_i + (1-y_i) \log (1 - \hat y_i) ) }
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://waldronlab.io">Levi Waldron</a>.</p>
+  <p></p>
+<p>Developed by <a href="https://waldronlab.io" class="external-link">Levi Waldron</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -541,6 +597,8 @@ d_i = s_i \sqrt{ -2 ( y_i \log \hat y_i + (1-y_i) \log (1 - \hat y_i) ) }
 
   
 
+
+  
 
   </body>
 </html>
